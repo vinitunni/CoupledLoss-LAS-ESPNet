@@ -1,0 +1,2 @@
+dictionary: data/lang_char/train-clean-100_unigram5000_units.txt
+stage 4: Network Training

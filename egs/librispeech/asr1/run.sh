@@ -6,16 +6,18 @@
 . ./path.sh
 . ./cmd.sh
 
+export CUDA_VISIBLE_DEVICES=2,3
+
 # general configuration
 backend=pytorch
-stage=-1       # start from -1 if you need to start from data download
+stage=5       # start from -1 if you need to start from data download
 stop_stage=100
-ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu)
+ngpu=2         # number of gpus ("0" uses cpu, otherwise use gpu)
 debugmode=1
 dumpdir=dump   # directory to dump full features
 N=0            # number of minibatches to be used (mainly for debugging). "0" uses all minibatches.
-verbose=0      # verbose option
-resume=        # Resume the training from snapshot
+verbose=1      # verbose option
+resume=exp/train-clean-100_pytorch_train/results/snapshot.ep.6        # Resume the training from snapshot
 
 # feature configuration
 do_delta=false
@@ -25,8 +27,8 @@ lm_config=conf/lm.yaml
 decode_config=conf/decode.yaml
 
 # rnnlm related
-lm_resume=        # specify a snapshot file to resume LM training
-lmtag=            # tag for managing LMs
+lm_resume=exp/train_rnnlm_pytorch_lm_unigram5000/snapshot.ep.10        # specify a snapshot file to resume LM training
+lmtag=withlm            # tag for managing LMs
 
 # decoding parameter
 recog_model=model.acc.best # set a model to be used for decoding: 'model.acc.best' or 'model.loss.best'
@@ -35,7 +37,8 @@ n_average=10
 # Set this to somewhere where you want to put your data, or where
 # someone else has already put it.  You'll want to change this
 # if you're not on the CLSP grid.
-datadir=/export/a15/vpanayotov/data
+#datadir=export/a15/vpanayotov/data
+datadir=/home/data/librispeech
 
 # base url for downloads.
 data_url=www.openslr.org/resources/12
@@ -58,9 +61,9 @@ set -e
 set -u
 set -o pipefail
 
-train_set=train_960
-train_dev=dev
-recog_set="test_clean test_other dev_clean dev_other"
+train_set=train-clean-100
+train_dev=dev-clean
+recog_set=test-clean
 
 if [ ${stage} -le -1 ] && [ ${stop_stage} -ge -1 ]; then
     echo "stage -1: Data Download"
@@ -73,9 +76,13 @@ if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     ### Task dependent. You have to make data the following preparation part by yourself.
     ### But you can utilize Kaldi recipes in most cases
     echo "stage 0: Data preparation"
-    for part in dev-clean test-clean dev-other test-other train-clean-100 train-clean-360 train-other-500; do
+    #commented by vinit
+    #for part in dev-clean test-clean dev-other test-other train-clean-100 train-clean-360 train-other-500; do
+    for part in dev-clean test-clean train-clean-100; do
         # use underscore-separated names in data directories.
-        local/data_prep.sh ${datadir}/LibriSpeech/${part} data/${part//-/_}
+        #commented by vinit and changed to remove -,_ replacement
+	#local/data_prep.sh ${datadir}/LibriSpeech/${part} data/${part//-/_}
+        local/data_prep.sh ${datadir}/LibriSpeech/${part} data/${part}
     done
 fi
 
@@ -87,14 +94,19 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     echo "stage 1: Feature Generation"
     fbankdir=fbank
     # Generate the fbank features; by default 80-dimensional fbanks with pitch on each frame
-    for x in dev_clean test_clean dev_other test_other train_clean_100 train_clean_360 train_other_500; do
+    #commented by vinit
+    #for x in dev_clean test_clean dev_other test_other train_clean_100 train_clean_360 train_other_500; do
+    for x in dev-clean test-clean train-clean-100; do
         steps/make_fbank_pitch.sh --cmd "$train_cmd" --nj 32 --write_utt2num_frames true \
             data/${x} exp/make_fbank/${x} ${fbankdir}
         utils/fix_data_dir.sh data/${x}
     done
-
-    utils/combine_data.sh --extra_files utt2num_frames data/${train_set}_org data/train_clean_100 data/train_clean_360 data/train_other_500
-    utils/combine_data.sh --extra_files utt2num_frames data/${train_dev}_org data/dev_clean data/dev_other
+#commented by vinit
+    #utils/combine_data.sh --extra_files utt2num_frames data/${train_set}_org data/train_clean_100 data/train_clean_360 data/train_other_500
+    utils/combine_data.sh --extra_files utt2num_frames data/${train_set}_org data/train-clean-100
+    #commented by vinit
+    #utils/combine_data.sh --extra_files utt2num_frames data/${train_dev}_org data/dev_clean data/dev_other
+    utils/combine_data.sh --extra_files utt2num_frames data/${train_dev}_org data/dev-clean
 
     # remove utt having more than 3000 frames
     # remove utt having more than 400 characters
@@ -220,8 +232,11 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
         --verbose ${verbose} \
         --resume ${resume} \
         --train-json ${feat_tr_dir}/data_${bpemode}${nbpe}.json \
-        --valid-json ${feat_dt_dir}/data_${bpemode}${nbpe}.json
+        --valid-json ${feat_dt_dir}/data_${bpemode}${nbpe}.json \
+	--report-cer \
+        --report-wer
 fi
+#report wer/cer added by vinit
 
 if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
     echo "stage 5: Decoding"
@@ -256,7 +271,7 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
             --batchsize 0 \
             --recog-json ${feat_recog_dir}/split${nj}utt/data_${bpemode}${nbpe}.JOB.json \
             --result-label ${expdir}/${decode_dir}/data.JOB.json \
-            --model ${expdir}/results/${recog_model}  \
+            --model ${expdir}/results/${recog_model} \
             --rnnlm ${lmexpdir}/rnnlm.model.best
 
         score_sclite.sh --bpe ${nbpe} --bpemodel ${bpemodel}.model --wer true ${expdir}/${decode_dir} ${dict}

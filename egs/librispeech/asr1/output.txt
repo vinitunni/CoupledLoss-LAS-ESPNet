@@ -1,0 +1,78 @@
+stage 1: Feature Generation
+steps/make_fbank_pitch.sh --cmd run.pl --nj 32 --write_utt2num_frames true data/dev-clean exp/make_fbank/dev-clean fbank
+utils/validate_data_dir.sh: Successfully validated data-directory data/dev-clean
+steps/make_fbank_pitch.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.
+steps/make_fbank_pitch.sh: Succeeded creating filterbank and pitch features for dev-clean
+fix_data_dir.sh: kept all 2687 utterances.
+fix_data_dir.sh: old files are kept in data/dev-clean/.backup
+steps/make_fbank_pitch.sh --cmd run.pl --nj 32 --write_utt2num_frames true data/test-clean exp/make_fbank/test-clean fbank
+steps/make_fbank_pitch.sh: moving data/test-clean/feats.scp to data/test-clean/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/test-clean
+steps/make_fbank_pitch.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.
+steps/make_fbank_pitch.sh: Succeeded creating filterbank and pitch features for test-clean
+fix_data_dir.sh: kept all 2620 utterances.
+fix_data_dir.sh: old files are kept in data/test-clean/.backup
+steps/make_fbank_pitch.sh --cmd run.pl --nj 32 --write_utt2num_frames true data/train-clean-100 exp/make_fbank/train-clean-100 fbank
+steps/make_fbank_pitch.sh: moving data/train-clean-100/feats.scp to data/train-clean-100/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/train-clean-100
+steps/make_fbank_pitch.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.
+steps/make_fbank_pitch.sh: Succeeded creating filterbank and pitch features for train-clean-100
+fix_data_dir.sh: kept all 28539 utterances.
+fix_data_dir.sh: old files are kept in data/train-clean-100/.backup
+utils/combine_data.sh --extra_files utt2num_frames data/train-clean-100_org data/train-clean-100
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh: combined utt2dur
+utils/combine_data.sh: combined utt2num_frames
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh: combined feats.scp
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh: combined spk2gender
+utils/combine_data.sh: combined utt2num_frames
+fix_data_dir.sh: kept all 28539 utterances.
+fix_data_dir.sh: old files are kept in data/train-clean-100_org/.backup
+utils/combine_data.sh --extra_files utt2num_frames data/dev-clean_org data/dev-clean
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh: combined utt2dur
+utils/combine_data.sh: combined utt2num_frames
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh: combined feats.scp
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh: combined spk2gender
+utils/combine_data.sh: combined utt2num_frames
+fix_data_dir.sh: kept all 2687 utterances.
+fix_data_dir.sh: old files are kept in data/dev-clean_org/.backup
+extract utterances having less than 3000 or more than 10 frames
+utils/data/get_utt2num_frames.sh: data/train-clean-100_org/utt2num_frames already present!
+extract utterances having less than 400 or more than 0 characters
+Reduced #utt from 28539 to 28539
+fix_data_dir.sh: kept all 28539 utterances.
+fix_data_dir.sh: old files are kept in data/train-clean-100/.backup
+change from 28539 to 28539
+extract utterances having less than 3000 or more than 10 frames
+utils/data/get_utt2num_frames.sh: data/dev-clean_org/utt2num_frames already present!
+extract utterances having less than 400 or more than 0 characters
+Reduced #utt from 2687 to 2687
+fix_data_dir.sh: kept all 2687 utterances.
+fix_data_dir.sh: old files are kept in data/dev-clean/.backup
+change from 2687 to 2687
+/home/vinit/exp/espnet-0.4.0/egs/librispeech/asr1/../../../utils/dump.sh --cmd run.pl --nj 80 --do_delta false data/train-clean-100/feats.scp data/train-clean-100/cmvn.ark exp/dump_feats/train dump/train-clean-100/deltafalse
+/home/vinit/exp/espnet-0.4.0/egs/librispeech/asr1/../../../utils/dump.sh --cmd run.pl --nj 32 --do_delta false data/dev-clean/feats.scp data/train-clean-100/cmvn.ark exp/dump_feats/dev dump/dev-clean/deltafalse
+/home/vinit/exp/espnet-0.4.0/egs/librispeech/asr1/../../../utils/dump.sh --cmd run.pl --nj 32 --do_delta false data/test-clean/feats.scp data/train-clean-100/cmvn.ark exp/dump_feats/recog/test-clean dump/test-clean/deltafalse
+dictionary: data/lang_char/train-clean-100_unigram5000_units.txt
+stage 2: Dictionary and Json Data Preparation
+5000 data/lang_char/train-clean-100_unigram5000_units.txt
+stage 3: LM Preparation

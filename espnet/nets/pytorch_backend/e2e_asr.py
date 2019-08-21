@@ -246,6 +246,7 @@ class E2E(ASRInterface, torch.nn.Module):
 
         # 5. compute cer/wer
         if self.training or not (self.report_cer or self.report_wer):
+            print ("Assigning WER and CER as 0 (line 250)")
             cer, wer = 0.0, 0.0
             # oracle_cer, oracle_wer = 0.0, 0.0
         else:
@@ -269,6 +270,10 @@ class E2E(ASRInterface, torch.nn.Module):
                 seq_hat_text = seq_hat_text.replace(self.recog_args.blank, '')
                 seq_true_text = "".join(seq_true).replace(self.recog_args.space, ' ')
 
+				#print added by vinit to compare between teacher forced and non teacher forced outputs
+                logging.info('Nbest output-->groundtruth is ' + seq_true_text)
+                logging.info('Nbest output-->prediction  is ' + seq_hat_text)
+
                 hyp_words = seq_hat_text.split()
                 ref_words = seq_true_text.split()
                 word_eds.append(editdistance.eval(hyp_words, ref_words))
@@ -279,7 +284,9 @@ class E2E(ASRInterface, torch.nn.Module):
                 char_ref_lens.append(len(ref_chars))
 
             wer = 0.0 if not self.report_wer else float(sum(word_eds)) / sum(word_ref_lens)
+            print ('wer set as 0 line 284' if not self.report_wer else 'wer calculated line 284')
             cer = 0.0 if not self.report_cer else float(sum(char_eds)) / sum(char_ref_lens)
+            print ('cer set as 0 line 286' if not self.report_cer else 'cer calculated line 286')
 
         alpha = self.mtlalpha
         if alpha == 0:

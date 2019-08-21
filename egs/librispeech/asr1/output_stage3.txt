@@ -1,0 +1,3 @@
+dictionary: data/lang_char/train-clean-100_unigram5000_units.txt
+stage 3: LM Preparation
+LM training does not support multi-gpu. signle gpu will be used.

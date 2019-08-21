@@ -32,7 +32,7 @@ def main(cmd_args):
 
     parser.add_argument('--ngpu', default=0, type=int,
                         help='Number of GPUs')
-    parser.add_argument('--backend', default='chainer', type=str,
+    parser.add_argument('--backend', default='pytorch', type=str,
                         choices=['chainer', 'pytorch'],
                         help='Backend library')
     parser.add_argument('--outdir', type=str, required=True,
@@ -121,9 +121,9 @@ def main(cmd_args):
     parser.add_argument('--sampling-probability', default=0.0, type=float,
                         help='Ratio of predicted labels fed back to decoder')
     # recognition options to compute CER/WER
-    parser.add_argument('--report-cer', default=False, action='store_true',
+    parser.add_argument('--report-cer', default=True, action='store_true',
                         help='Compute CER on development set')
-    parser.add_argument('--report-wer', default=False, action='store_true',
+    parser.add_argument('--report-wer', default=True, action='store_true',
                         help='Compute WER on development set')
     parser.add_argument('--nbest', type=int, default=1,
                         help='Output N-best hypotheses')
@@ -145,8 +145,8 @@ def main(cmd_args):
                         help='RNNLM model config file to read')
     parser.add_argument('--lm-weight', default=0.1, type=float,
                         help='RNNLM weight.')
-    parser.add_argument('--sym-space', default='<space>', type=str,
-                        help='Space symbol')
+    #parser.add_argument('--sym-space', default='<space>', type=str, help='Space symbol')
+    parser.add_argument('--sym-space', default='\u2581', type=str, help='Space symbol')
     parser.add_argument('--sym-blank', default='<blank>', type=str,
                         help='Blank symbol')
     # model (parameter) related

@@ -1,0 +1,59 @@
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 0
+stage 1: Feature Generation
+utils/combine_data.sh --extra_files utt2num_frames data/test_us_orig_org data/test_us_mp3
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh: combined feats.scp
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+utils/combine_data.sh: combined utt2num_frames
+fix_data_dir.sh: kept all 11527 utterances.
+fix_data_dir.sh: old files are kept in data/test_us_orig_org/.backup
+utils/combine_data.sh --extra_files utt2num_frames data/train_us_orig_org data/train_us_mp3
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh: combined feats.scp
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+utils/combine_data.sh: combined utt2num_frames
+fix_data_dir.sh: kept all 99933 utterances.
+fix_data_dir.sh: old files are kept in data/train_us_orig_org/.backup
+extract utterances having less than 3000 or more than 10 frames
+utils/data/get_utt2num_frames.sh: data/train_us_orig_org/utt2num_frames already present!
+extract utterances having less than 400 or more than 0 characters
+Reduced #utt from 99933 to 99933
+fix_data_dir.sh: kept all 99933 utterances.
+fix_data_dir.sh: old files are kept in data/train_us_orig/.backup
+change from 99933 to 99933
+extract utterances having less than 3000 or more than 10 frames
+utils/data/get_utt2num_frames.sh: data/test_us_orig_org/utt2num_frames already present!
+extract utterances having less than 400 or more than 0 characters
+Reduced #utt from 11527 to 11527
+fix_data_dir.sh: kept all 11527 utterances.
+fix_data_dir.sh: old files are kept in data/test_us_orig/.backup
+change from 11527 to 11527
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/dump.sh --cmd run.pl --nj 40 --do_delta true data/train_us_orig/feats.scp data/train_us_orig/cmvn.ark exp/dump_feats/train dump/train_us_orig/deltatrue
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/dump.sh --cmd run.pl --nj 32 --do_delta true data/test_us_orig/feats.scp data/train_us_orig/cmvn.ark exp/dump_feats/dev dump/test_us_orig/deltatrue
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/dump.sh --cmd run.pl --nj 32 --do_delta true data/test_non_us_mp3/feats.scp data/train_us_orig/cmvn.ark exp/dump_feats/recog/test_non_us_mp3 dump/test_non_us_mp3/deltatrue
+dictionary: data/lang_char/train_us_orig_unigram1000_units.txt
+stage 2: Dictionary and Json Data Preparation
+1106 data/lang_char/train_us_orig_unigram1000_units.txt
+stage 4: Network Training

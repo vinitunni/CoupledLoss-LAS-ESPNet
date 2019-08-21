@@ -1,0 +1,7 @@
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_us_orig_unigram1000_units.txt
+stage 4: Network Training
+stage 5: Decoding
+./run_modified.sh: 1 background jobs are failed.

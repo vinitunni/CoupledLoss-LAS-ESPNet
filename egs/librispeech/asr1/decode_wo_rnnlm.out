@@ -1,0 +1,9 @@
+dictionary: data/lang_char/train-clean-100_unigram5000_units.txt
+stage 5: Decoding
+write a CER (or TER) result in exp/train-clean-100_pytorch_train/decode_test-clean_decode_lm/result.txt
+    | SPKR        | # Snt # Wrd | Corr    Sub    Del    Ins    Err  S.Err |
+    | Sum/Avg     | 2620  67106 | 77.9   15.2    6.9    2.6   24.7   87.9 |
+write a WER result in exp/train-clean-100_pytorch_train/decode_test-clean_decode_lm/result.wrd.txt
+  | SPKR        | # Snt  # Wrd | Corr     Sub    Del     Ins    Err   S.Err |
+  | Sum/Avg     | 2620   52576 | 82.2    15.8    2.0     2.1   19.9    87.8 |
+Finished
