@@ -1,7 +1,7 @@
-data/
+asr1/data/
 
-exp/
+asr1/exp/
 
-oledr_expts_tb_and_logs/
+asr1/oledr_expts_tb_and_logs/
 
-tensorboard_mixed/
+asr1/tensorboard_mixed/
