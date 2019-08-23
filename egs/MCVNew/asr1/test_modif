@@ -1,0 +1,549 @@
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+stage 1: Feature Generation
+utils/combine_data.sh --extra_files utt2num_frames data/train_mixed_new_0.25_org data/train_us_mp3 data/train_non_us_0.5
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh: combined feats.scp
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+utils/combine_data.sh: combined utt2num_frames
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.25_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.25_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.25_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.25_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.25_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.25_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.25_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.25_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.25_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.25_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.25_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.25_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 3
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training

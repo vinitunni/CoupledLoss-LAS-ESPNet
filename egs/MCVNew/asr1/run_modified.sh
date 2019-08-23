@@ -8,11 +8,11 @@ echo RAN_PATH
 . ./cmd.sh
 echo RAN_CMD
 
-resume=
+resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.5_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta/results/snapshot_backup_43
 #resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/old_expts_before_12th_Aug/train_mixed_new_0.25_pytorch_vggblstm_e3_subsample2_2_2_unit1024_proj1024_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.0_bs12_mli600_mlo150_beamsize_10_delta/results/snapshot_backup_40
 # general configuration
 backend=pytorch
-stage=1     # start from -1 if you need to start from data download
+stage=4     # start from -1 if you need to start from data download
 stop_stage=2
 ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu2
 debugmode=1
@@ -44,7 +44,7 @@ aconv_filts=100
 mtlalpha=0.0
 
 # minibatch related
-batchsize=12
+batchsize=4
 maxlen_in=600  # if input length  > maxlen_in, batchsize is automatically reduced
 maxlen_out=150 # if output length > maxlen_out, batchsize is automatically reduced
 
@@ -97,7 +97,7 @@ nbpe=1000
 bpemode=unigram
 
 # exp tag
-tag=
+tag=exp_test_modif
 #tag=mixed_0.25_sampprob0.0_from_scratch_blstm_only
 #tag=us_from_0.3_to_0.8_to_1
 #tag="shorten-folder-name-expt" # tag for managing experiments.
@@ -112,7 +112,7 @@ tag=
 set -e
 set -u
 set -o pipefail
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=1
 echo CUDA_VISIBLE_DEVICES $CUDA_VISIBLE_DEVICES
 
 # it is best to create a different dev set for each train set as bpe encoding is error free this way
