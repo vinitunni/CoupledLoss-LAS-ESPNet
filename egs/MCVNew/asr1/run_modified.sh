@@ -8,7 +8,12 @@ echo RAN_PATH
 . ./cmd.sh
 echo RAN_CMD
 
-resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.5_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta/results/snapshot_backup_43
+
+
+resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/snapshot.ep.26
+#resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.25_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta/results/snapshot_backup_34
+#resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_us_orig_pytorch_vggblstmp_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta/results/snapshot_backup_20
+#resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.5_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta/results/snapshot_backup_43
 #resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/old_expts_before_12th_Aug/train_mixed_new_0.25_pytorch_vggblstm_e3_subsample2_2_2_unit1024_proj1024_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.0_bs12_mli600_mlo150_beamsize_10_delta/results/snapshot_backup_40
 # general configuration
 backend=pytorch
@@ -44,7 +49,7 @@ aconv_filts=100
 mtlalpha=0.0
 
 # minibatch related
-batchsize=4
+batchsize=12
 maxlen_in=600  # if input length  > maxlen_in, batchsize is automatically reduced
 maxlen_out=150 # if output length > maxlen_out, batchsize is automatically reduced
 
@@ -97,7 +102,7 @@ nbpe=1000
 bpemode=unigram
 
 # exp tag
-tag=exp_test_modif
+tag=
 #tag=mixed_0.25_sampprob0.0_from_scratch_blstm_only
 #tag=us_from_0.3_to_0.8_to_1
 #tag="shorten-folder-name-expt" # tag for managing experiments.
@@ -112,14 +117,22 @@ tag=exp_test_modif
 set -e
 set -u
 set -o pipefail
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=2
 echo CUDA_VISIBLE_DEVICES $CUDA_VISIBLE_DEVICES
+
+pairwise=True
+pair_threshold=0.05
+pair_cutoff=10
+pair_lambda=0.8
+pair_alpha=1
+
+
 
 # it is best to create a different dev set for each train set as bpe encoding is error free this way
 #train_set=train_us_orig
-#train_dev=test_us_orig
-train_set=train_mixed_new_0.5
-train_dev=test_us_mixed_0.5
+train_dev=test_us_orig
+train_set=train_paired_0.25
+#train_dev=test_us_mixed_0.25
 recog_set="test_non_us_mp3"
 ###### Ignore stage -1 as we are not downloading the data
 ######
@@ -158,7 +171,8 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
 #        utils/fix_data_dir.sh data/${x}
 #    done
 # Check if it is better to just use combine data
-    utils/combine_data.sh --extra_files utt2num_frames data/${train_set}_org data/train_us_mp3 data/train_non_us_0.5
+    #utils/combine_data.sh --extra_files utt2num_frames data/${train_set}_org data/train_us_mp3 data/train_non_us_0.5
+    utils/combine_data.sh --extra_files utt2num_frames data/${train_set}_org data/train_non_us_0.5
     utils/combine_data.sh --extra_files utt2num_frames data/${train_dev}_org data/test_us_mp3
     #utils/combine_data.sh --extra_files utt2num_frames data/${train_set}_org data/train_us_mp3
 
@@ -227,15 +241,18 @@ fi
 
 dict=data/lang_char/${train_set}_${bpemode}${nbpe}_units.txt
 bpemodel=data/lang_char/${train_set}_${bpemode}${nbpe}
+dict=data/lang_char/train_us_orig_unigram1000_units.txt
+bpemodel=data/lang_char/train_us_orig_unigram1000
 echo "dictionary: ${dict}"
 if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
     ### Task dependent. You have to check non-linguistic symbols used in the corpus.
     echo "stage 2: Dictionary and Json Data Preparation"
     mkdir -p data/lang_char/
-    echo "<unk> 1" > ${dict} # <unk> must be 1, 0 will be used for "blank" in CTC
+	echo "New dir made"
+    #echo "<unk> 1" > ${dict} # <unk> must be 1, 0 will be used for "blank" in CTC
     cut -f 2- -d" " data/${train_set}/text > data/lang_char/input.txt
-    spm_train --input=data/lang_char/input.txt --vocab_size=${nbpe} --model_type=${bpemode} --model_prefix=${bpemodel} --input_sentence_size=100000000
-    spm_encode --model=${bpemodel}.model --output_format=piece < data/lang_char/input.txt | tr ' ' '\n' | sort | uniq | awk '{print $0 " " NR+1}' >> ${dict}
+    #spm_train --input=data/lang_char/input.txt --vocab_size=${nbpe} --model_type=${bpemode} --model_prefix=${bpemodel} --input_sentence_size=100000000
+    #spm_encode --model=${bpemodel}.model --output_format=piece < data/lang_char/input.txt | tr ' ' '\n' | sort | uniq | awk '{print $0 " " NR+1}' >> ${dict}
     wc -l ${dict}
 
     # make json labels
@@ -302,7 +319,7 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
 fi
 
 if [ -z ${tag} ]; then
-    expname=${train_set}_${backend}_${etype}_e${elayers}_subsample${subsample}_unit${eunits}_proj${eprojs}_d${dlayers}_unit${dunits}_${atype}_aconvc${aconv_chans}_aconvf${aconv_filts}_mtlalpha${mtlalpha}_drop${drop}_${opt}_sampprob${samp_prob}_bs${batchsize}_mli${maxlen_in}_mlo${maxlen_out}_beamsize_${beam_size}
+    expname=${train_set}_${backend}_${etype}_e${elayers}_subsample${subsample}_unit${eunits}_proj${eprojs}_d${dlayers}_unit${dunits}_${atype}_aconvc${aconv_chans}_aconvf${aconv_filts}_mtlalpha${mtlalpha}_drop${drop}_${opt}_sampprob${samp_prob}_bs${batchsize}_mli${maxlen_in}_mlo${maxlen_out}_beamsize_${beam_size}_pairwise${pairwise}_pairthrshld${pair_threshold}_paircutoff${pair_cutoff}_pairlmbda${pair_lambda}_pairalpha${pair_alpha}
     if ${do_delta}; then
         expname=${expname}_delta
     fi
@@ -351,7 +368,12 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
         --patience ${patience}	\
 		--ctc-weight ${ctc_weight}	\
 	--report-cer	\
-	--report-wer
+	--report-wer	\
+	--pairwise ${pairwise}	\
+	--pair-threshold ${pair_threshold} \
+	--pair-cutoff ${pair_cutoff}	\
+	--pair-lambda ${pair_lambda}	\
+	--pair-alpha ${pair_alpha}
 fi
 
 if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then

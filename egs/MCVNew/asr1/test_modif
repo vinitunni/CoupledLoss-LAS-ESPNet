@@ -547,3 +547,23 @@ RAN_CMD
 CUDA_VISIBLE_DEVICES 1
 dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
 stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.5_unigram1000_units.txt
+stage 4: Network Training
