@@ -137,6 +137,10 @@ class E2E(ASRInterface, torch.nn.Module):
         self.logzero = -10000000000.0
         self.loss = None
         self.acc = None
+        self.loss_siam = None
+        self.pairwise = args.pairwise
+        self.pair_lambda = args.pair_lambda
+        self.pair_alpha = args.pair_alpha
 
     def init_like_chainer(self):
         """Initialize weight like chainer
@@ -205,7 +209,15 @@ class E2E(ASRInterface, torch.nn.Module):
             hs_pad, hlens = xs_pad, ilens
 
         # 1. Encoder
+        #logging.info("before sorting hlens is: "+ str(hlens))
+        hlens2 , perm_index = torch.tensor(hlens).sort(0,descending=True)
+        #logging.info("after sorting hlens is : "+str(hlens2))
+        hs_pad = hs_pad[perm_index,:,:]
+        hlens = hlens2
         hs_pad, hlens, _ = self.enc(hs_pad, hlens)
+
+        hs_pad = hs_pad[perm_index.sort()[1],:,:]
+        hlens = hlens[perm_index.sort()[1]]
 
         # 2. CTC loss
         if self.mtlalpha == 0:
@@ -217,7 +229,7 @@ class E2E(ASRInterface, torch.nn.Module):
         if self.mtlalpha == 1:
             self.loss_att, acc = None, None
         else:
-            self.loss_att, acc = self.dec(hs_pad, hlens, ys_pad)
+            self.loss_att, self.loss_siam, acc = self.dec(hs_pad, hlens, ys_pad, perm_index)
         self.acc = acc
 
         # 4. compute cer without beam search
@@ -246,7 +258,7 @@ class E2E(ASRInterface, torch.nn.Module):
 
         # 5. compute cer/wer
         if self.training or not (self.report_cer or self.report_wer):
-            print ("Assigning WER and CER as 0 (line 250)")
+            #print ("Assigning WER and CER as 0 (line 250)")
             cer, wer = 0.0, 0.0
             # oracle_cer, oracle_wer = 0.0, 0.0
         else:
@@ -303,6 +315,11 @@ class E2E(ASRInterface, torch.nn.Module):
             loss_ctc_data = float(self.loss_ctc)
 
         loss_data = float(self.loss)
+        if self.pairwise:
+            self.loss = ((1.0-self.pair_lambda)*self.loss)+(self.pair_lambda*self.loss_siam)
+            self.loss*=self.pair_alpha
+            #self.loss = loss_data
+            loss_data = float(self.loss)
         if loss_data < CTC_LOSS_THRESHOLD and not math.isnan(loss_data):
             self.reporter.report(loss_ctc_data, loss_att_data, acc, cer_ctc, cer, wer, loss_data)
         else:

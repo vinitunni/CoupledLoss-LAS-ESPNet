@@ -57,10 +57,17 @@ class RNNP(torch.nn.Module):
         :return: batch of hidden state sequences (B, Tmax, hdim)
         :rtype: torch.Tensor
         """
-        # logging.info(self.__class__.__name__ + ' input lengths: ' + str(ilens))
+        logging.info(self.__class__.__name__ + ' input lengths: ' + str(ilens))
         elayer_states = []
         for layer in six.moves.range(self.elayers):
+            #logging.info("xs_pad shape is: " + str(xs_pad.shape))
+            #ilens = torch.tensor(ilens)
+            #lengths , perm_index = ilens.sort(0, descending=True)
+            #xs_pad_s = xs_pad[perm_index,:,:]
             xs_pack = pack_padded_sequence(xs_pad, ilens, batch_first=True)
+            #xs_pack_s = torch.tensor(xs_pack_s)
+            #logging.info("xs_pack_s type is: "+str(type(xs_pack_s)))
+            #xs_pack = xs_pack_s[perm_index.sort()[1],:,:]
             rnn = getattr(self, ("birnn" if self.bidir else "rnn") + str(layer))
             rnn.flatten_parameters()
             if prev_state is not None and rnn.bidirectional:
@@ -114,8 +121,21 @@ class RNN(torch.nn.Module):
         :return: batch of hidden state sequences (B, Tmax, eprojs)
         :rtype: torch.Tensor
         """
+        #logging.info("xs_pad shape is: " + str(xs_pad.shape))
+        #logging.info("ilens type is"+str(type(ilens)))
+        #ilens = torch.tensor(ilens)
+        #lengths , perm_index = ilens.sort(0, descending=True)
+        #logging.info("before sorting xs_pad shape is: "+ str(type(xs_pad.shape)))
+        #logging.info("befor sorting xs_pad is: " +str(xs_pad))
+        #xs_pad_s = xs_pad[perm_index,:,:]
+        #logging.info("after sorting xs_pad_s shape is: "+ str(xs_pad_s.shape))
         logging.info(self.__class__.__name__ + ' input lengths: ' + str(ilens))
+        #logging.info("after sorting xs_pad_s is: " +str(xs_pad_s))
         xs_pack = pack_padded_sequence(xs_pad, ilens, batch_first=True)
+        #logging.info("xs_pack_s type is: "+ str(type(xs_pack_s)))
+        #logging.info("xs_pack_s shape is" + str(xs_pack_s.shape)) 
+        #xs_pack_s = torch.tensor(xs_pack_s)
+        #xs_pack = xs_pack_s[perm_index.sort()[1],:,:]
         self.nbrnn.flatten_parameters()
         if prev_state is not None and self.nbrnn.bidirectional:
             # We assume that when previous state is passed, it means that we're streaming the input
@@ -124,6 +144,8 @@ class RNN(torch.nn.Module):
         ys, states = self.nbrnn(xs_pack, hx=prev_state)
         # ys: utt list of frame x cdim x 2 (2: means bidirectional)
         ys_pad, ilens = pad_packed_sequence(ys, batch_first=True)
+        #ys = ys.index_select(0,perm_index.sort()[1])
+        #states = states.index_select(1,perm_index.sort()[1])
         # (sum _utt frame_utt) x dim
         projected = torch.tanh(self.l_last(
             ys_pad.contiguous().view(-1, ys_pad.size(2))))

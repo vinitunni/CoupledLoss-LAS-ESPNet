@@ -364,7 +364,7 @@ def torch_resume(snapshot_path, trainer):
 
     # restore trainer states
     d = NpzDeserializer(snapshot_dict['trainer'])
-    d.load(trainer)
+    #d.load(trainer)
 
     # restore model states
     if hasattr(trainer.updater.model, "model"):

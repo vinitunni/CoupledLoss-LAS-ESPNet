@@ -1,0 +1,32 @@
+import itertools
+import numpy as np
+threshold=0.05
+counter_cutoff=10
+
+temp_sorted=[]
+temp_p=[]
+temp_q=[]
+prev_text=sorted_data[0][1]['output'][0]['text']
+start_index=0
+end_index=0
+
+for i in range(len(sorted_data))[1:-1]:
+	present_text=sorted_data[i][1]['output'][0]['text']
+	end_index=i
+	if (present_text != prev_text):
+		counter=0
+		for p,q in itertools.combinations(range(start_index,i),2):
+			counter+=1
+			if (counter>counter_cutoff):
+				break
+			if np.random.random()<threshold:
+				temp_p.append(sorted_data[p])
+				temp_q.append(sorted_data[q])
+		start_index = i
+		prev_text = present_text
+for i in np.random.permutation(range(len(temp_p))):
+	temp_sorted.append(temp_p[i])
+	temp_sorted.append(temp_q[i])
+
+			
+

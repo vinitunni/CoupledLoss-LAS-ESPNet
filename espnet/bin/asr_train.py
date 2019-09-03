@@ -277,6 +277,17 @@ def main(cmd_args):
                         help='')
     parser.add_argument('--fbank-fmax', type=float, default=None,
                         help='')
+   #extra parses added by vinit 
+    parser.add_argument('--pairwise', type=bool, default=True,
+                        help='Set true if batches need to be generated as pairs')
+    parser.add_argument('--pair-threshold', type=float, default=0.05,
+                        help='Percentage threshold to decide proportion of nC2 pairs')
+    parser.add_argument('--pair-cutoff', type=float, default=10,
+                        help='Maximum pairs of a given sentence')
+    parser.add_argument('--pair-lambda', type=float, default=1.0,
+                        help='Lambda weight for siamese loss')
+    parser.add_argument('--pair-alpha', type=float, default=0.001,
+                        help='alpha(lr) weight for siamese loss')
 
     args, _ = parser.parse_known_args(cmd_args)
 

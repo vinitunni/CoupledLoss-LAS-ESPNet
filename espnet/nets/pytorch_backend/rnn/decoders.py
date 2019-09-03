@@ -79,6 +79,7 @@ class Decoder(torch.nn.Module):
             self.output = torch.nn.Linear(dunits, odim)
 
         self.loss = None
+        self.loss_siam = None 	#added by vinit
         self.att = att
         self.dunits = dunits
         self.sos = sos
@@ -110,7 +111,7 @@ class Decoder(torch.nn.Module):
                 z_list[l] = self.decoder[l](self.dropout_dec[l - 1](z_list[l - 1]), z_prev[l])
         return z_list, c_list
 
-    def forward(self, hs_pad, hlens, ys_pad, strm_idx=0):
+    def forward(self, hs_pad, hlens, ys_pad, perm_index, strm_idx=0):
         """Decoder forward
 
         :param torch.Tensor hs_pad: batch of padded hidden state sequences (B, Tmax, D)
@@ -123,6 +124,14 @@ class Decoder(torch.nn.Module):
         :rtype: float
         """
         # TODO(kan-bayashi): need to make more smart way
+        #logging.info("#ys_pad shape is: "+ str(ys_pad.shape))
+        #logging.info("#ys_pad is: "+ str(ys_pad))
+        #ys_pad = ys_pad[perm_index,:]
+        #logging.info("perm_index is: "+ str(perm_index))
+        #logging.info("new ys_pad shape is: "+ str(ys_pad.shape))
+
+        #hs_pad = hs_pad[perm_index.sort()[1],:,:]
+        #hlens = hlens[perm_index.sort()[1]]
         ys = [y[y != self.ignore_id] for y in ys_pad]  # parse padded ys
         # attention index for the attention module
         # in SPA (speaker parallel attention), att_idx is used to select attention module. In other cases, it is 0.
@@ -163,8 +172,10 @@ class Decoder(torch.nn.Module):
         eys = self.dropout_emb(self.embed(ys_in_pad))  # utt x olen x zdim
 
         # loop for an output sequence
+        att_cs = []     #will be used to store att_c fro siamese loss : vinit
         for i in six.moves.range(olength):
             att_c, att_w = self.att[att_idx](hs_pad, hlens, self.dropout_dec[0](z_list[0]), att_w)
+            att_cs.append(att_c)
             if i > 0 and random.random() < self.sampling_probability:
                 logging.info(' scheduled sampling ')
                 z_out = self.output(z_all[-1])
@@ -186,6 +197,20 @@ class Decoder(torch.nn.Module):
             reduction_str = 'elementwise_mean'
         else:
             reduction_str = 'mean'
+
+		#adding siamese loss below
+        self.loss_siam = 0
+        att_cs = torch.stack(att_cs,0)
+        lens = [y.size(0) for y in ys_out]
+        #logging.info('att_cs shape is: '+str(att_cs.shape))
+        for i in range(int(att_cs.shape[1]/2)):
+            max_len = max(lens[2*i],lens[2*i+1])
+            self.loss_siam += (att_cs[:max_len,2*i,:]-att_cs[:max_len,2*i + 1,:]).norm()
+        self.loss_siam/=att_cs.shape[1]
+        #siamese loss calculated
+
+
+
         self.loss = F.cross_entropy(y_all, ys_out_pad.view(-1),
                                     ignore_index=self.ignore_id,
                                     reduction=reduction_str)
@@ -193,6 +218,8 @@ class Decoder(torch.nn.Module):
         self.loss *= (np.mean([len(x) for x in ys_in]) - 1)
         acc = th_accuracy(y_all, ys_out_pad, ignore_label=self.ignore_id)
         logging.info('att loss:' + ''.join(str(self.loss.item()).split('\n')))
+        logging.info('siam loss:' + ''.join(str(self.loss_siam.item()).split('\n')))
+
 
         # show predicted character sequence for debug
         if self.verbose > 0 and self.char_list is not None:
@@ -218,7 +245,7 @@ class Decoder(torch.nn.Module):
             loss_reg = - torch.sum((F.log_softmax(y_all, dim=1) * self.vlabeldist).view(-1), dim=0) / len(ys_in)
             self.loss = (1. - self.lsm_weight) * self.loss + self.lsm_weight * loss_reg
 
-        return self.loss, acc
+        return self.loss, self.loss_siam, acc
 
     def recognize_beam(self, h, lpz, recog_args, char_list, rnnlm=None, strm_idx=0):
         """beam search implementation

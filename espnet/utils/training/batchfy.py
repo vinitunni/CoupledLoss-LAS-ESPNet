@@ -32,9 +32,13 @@ def batchfy_by_seq(
     minibatches = []
     start = 0
     while True:
-        _, info = sorted_data[start]
-        ilen = int(info[ikey][0]['shape'][0])
-        olen = int(info[okey][0]['shape'][0])
+        ilen = 0
+        olen = 0
+        last = len(sorted_data)
+        for temp_i in range(batch_size):
+            _, info = sorted_data[min(start+temp_i,last-1)]
+            ilen = max(int(info[ikey][0]['shape'][0]),ilen)
+            olen = max(int(info[okey][0]['shape'][0]),olen)
         factor = max(int(ilen / max_length_in), int(olen / max_length_out))
         # change batchsize depending on the input and output length
         # if ilen = 1000 and max_length_in = 800
@@ -45,7 +49,6 @@ def batchfy_by_seq(
         minibatch = sorted_data[start:end]
         if shortest_first:
             minibatch.reverse()
-
         # check each batch is more than minimum batchsize
         if len(minibatch) < min_batch_size:
             mod = min_batch_size - len(minibatch) % min_batch_size
@@ -55,7 +58,6 @@ def batchfy_by_seq(
                 additional_minibatch.reverse()
             minibatch.extend(additional_minibatch)
         minibatches.append(minibatch)
-
         if end == len(sorted_data):
             break
         start = end
@@ -255,7 +257,7 @@ BATCH_SORT_KEY_CHOICES = ["input", "output", "shuffle"]
 
 def make_batchset(data, batch_size=0, max_length_in=float("inf"), max_length_out=float("inf"),
                   num_batches=0, min_batch_size=1, shortest_first=False, batch_sort_key="input", swap_io=False,
-                  count="auto", batch_bins=0, batch_frames_in=0, batch_frames_out=0, batch_frames_inout=0):
+                  count="auto", batch_bins=0, batch_frames_in=0, batch_frames_out=0, batch_frames_inout=0,pairwise=False,pair_threshold=0.05, pair_cutoff=10):
     """Make batch set from json dictionary
 
     if utts have "category" value,
@@ -337,6 +339,47 @@ def make_batchset(data, batch_size=0, max_length_in=float("inf"), max_length_out
         sorted_data = sorted(d.items(), key=lambda data: int(
             data[1][batch_sort_key][0]['shape'][0]), reverse=not shortest_first)
         logging.info('# utts: ' + str(len(sorted_data)))
+
+###Start of modif by vinit for pairwise
+        if (pairwise):
+			# sort by output texts (vinit)
+            batch_sort_key = 'output'
+            sorted_data = sorted(d.items(), key=lambda data: str(
+            	''.join(data[1][batch_sort_key][0]['text'].split())), reverse=shortest_first)
+            threshold=pair_threshold
+            counter_cutoff=pair_cutoff
+            
+            temp_sorted=[]
+            temp_p=[]
+            temp_q=[]
+            prev_text=sorted_data[0][1]['output'][0]['text']
+            start_index=0
+            end_index=0
+
+            for i in range(len(sorted_data))[1:-1]:
+                present_text=sorted_data[i][1]['output'][0]['text']
+                end_index=i
+                if (present_text != prev_text):
+                    counter=0
+                    for p,q in itertools.combinations(range(start_index,i),2):
+                        counter+=1
+                        if (counter>counter_cutoff):
+                            break
+                        if np.random.random()<threshold:
+                            temp_p.append(sorted_data[p])
+                            temp_q.append(sorted_data[q])
+                    start_index = i
+                    prev_text = present_text
+            for i in np.random.permutation(range(len(temp_p))):
+                temp_sorted.append(temp_p[i])
+                temp_sorted.append(temp_q[i])
+
+            sorted_data = temp_sorted
+            logging.info('sorted_data '+ str(sorted_data))
+
+##End of modif for pairwise
+
+
         if count == "seq":
             batches = batchfy_by_seq(
                 sorted_data,

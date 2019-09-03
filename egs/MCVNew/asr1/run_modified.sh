@@ -49,7 +49,7 @@ aconv_filts=100
 mtlalpha=0.0
 
 # minibatch related
-batchsize=12
+batchsize=16
 maxlen_in=600  # if input length  > maxlen_in, batchsize is automatically reduced
 maxlen_out=150 # if output length > maxlen_out, batchsize is automatically reduced
 
@@ -117,14 +117,14 @@ tag=
 set -e
 set -u
 set -o pipefail
-export CUDA_VISIBLE_DEVICES=2
+export CUDA_VISIBLE_DEVICES=3
 echo CUDA_VISIBLE_DEVICES $CUDA_VISIBLE_DEVICES
 
 pairwise=True
-pair_threshold=0.05
+pair_threshold=0.8
 pair_cutoff=10
-pair_lambda=0.8
-pair_alpha=1
+pair_lambda=0.5
+pair_alpha=0.5
 
 
 
@@ -383,7 +383,11 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
     pids=() # initialize pids
     for rtask in ${recog_set}; do
     (
-        decode_dir=decode_${rtask}_beam${beam_size}_e${recog_model}_p${penalty}_len${minlenratio}-${maxlenratio}_ctcw${ctc_weight}_rnnlm${lm_weight}_${lmtag}
+        #expdir=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.5_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta
+		#expdir=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.1_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta
+		#expdir=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.25_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta
+		expdir=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_us_orig_pytorch_vggblstmp_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta
+		decode_dir=decode_${rtask}_beam${beam_size}_e${recog_model}_p${penalty}_len${minlenratio}-${maxlenratio}_ctcw${ctc_weight}_rnnlm${lm_weight}_${lmtag}
         feat_recog_dir=${dumpdir}/${rtask}/delta${do_delta}
 
         # split data
