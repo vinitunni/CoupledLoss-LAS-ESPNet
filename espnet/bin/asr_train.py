@@ -185,7 +185,7 @@ def main(cmd_args):
                         help='Number of gradient accumuration')
     parser.add_argument('--eps', default=1e-8, type=float,
                         help='Epsilon constant for optimizer')
-    parser.add_argument('--eps-decay', default=0.01, type=float,
+    parser.add_argument('--eps-decay', default=0.1, type=float,
                         help='Decaying ratio of epsilon')
     parser.add_argument('--weight-decay', default=0.0, type=float,
                         help='Weight decay ratio')
@@ -278,7 +278,7 @@ def main(cmd_args):
     parser.add_argument('--fbank-fmax', type=float, default=None,
                         help='')
    #extra parses added by vinit 
-    parser.add_argument('--pairwise', type=bool, default=True,
+    parser.add_argument('--pairwise', type=strtobool, default=False,
                         help='Set true if batches need to be generated as pairs')
     parser.add_argument('--pair-threshold', type=float, default=0.05,
                         help='Percentage threshold to decide proportion of nC2 pairs')

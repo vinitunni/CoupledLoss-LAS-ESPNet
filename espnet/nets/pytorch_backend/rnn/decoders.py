@@ -198,16 +198,6 @@ class Decoder(torch.nn.Module):
         else:
             reduction_str = 'mean'
 
-		#adding siamese loss below
-        self.loss_siam = 0
-        att_cs = torch.stack(att_cs,0)
-        lens = [y.size(0) for y in ys_out]
-        #logging.info('att_cs shape is: '+str(att_cs.shape))
-        for i in range(int(att_cs.shape[1]/2)):
-            max_len = max(lens[2*i],lens[2*i+1])
-            self.loss_siam += (att_cs[:max_len,2*i,:]-att_cs[:max_len,2*i + 1,:]).norm()
-        self.loss_siam/=att_cs.shape[1]
-        #siamese loss calculated
 
 
 
@@ -217,6 +207,16 @@ class Decoder(torch.nn.Module):
         # -1: eos, which is removed in the loss computation
         self.loss *= (np.mean([len(x) for x in ys_in]) - 1)
         acc = th_accuracy(y_all, ys_out_pad, ignore_label=self.ignore_id)
+        #adding siamese loss below
+        self.loss_siam = 0*self.loss
+        att_cs = torch.stack(att_cs,0)
+        lens = [y.size(0) for y in ys_out]
+        #logging.info('att_cs shape is: '+str(att_cs.shape))
+        for i in range(int(att_cs.shape[1]/2)):
+            max_len = max(lens[2*i],lens[2*i+1])
+            self.loss_siam += (att_cs[:max_len,2*i,:]-att_cs[:max_len,2*i + 1,:]).norm()
+        self.loss_siam/=att_cs.shape[1]
+        #siamese loss calculated
         logging.info('att loss:' + ''.join(str(self.loss.item()).split('\n')))
         logging.info('siam loss:' + ''.join(str(self.loss_siam.item()).split('\n')))
 

@@ -1,0 +1,12 @@
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_us_orig_unigram1000_units.txt
+stage 5: Decoding
+write a CER (or TER) result in exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.7/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mp3_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/result.txt
+|          SPKR                                                                                                                                       |           # Snt                     # Wrd           |           Corr                       Sub                        Del                       Ins                        Err                     S.Err           |
+|          Sum/Avg                                                                                                                                    |          11527                     192928           |           56.9                      38.4                        4.7                      32.5                       75.6                      98.9           |
+write a WER result in exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.7/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mp3_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/result.wrd.txt
+|           SPKR                                                                                                                                       |           # Snt                     # Wrd           |           Corr                        Sub                        Del                        Ins                        Err                      S.Err           |
+|           Sum/Avg                                                                                                                                    |          11527                      102904          |           51.9                       41.7                        6.4                       11.2                       59.3                       98.9           |
+Finished

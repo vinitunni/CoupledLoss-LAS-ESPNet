@@ -7,17 +7,13 @@
 echo RAN_PATH
 . ./cmd.sh
 echo RAN_CMD
+resume=
+#resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/results/snapshot.ep.21
+#resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.0/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/results/snapshot.ep.14
 
-
-
-resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/snapshot.ep.26
-#resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.25_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta/results/snapshot_backup_34
-#resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_us_orig_pytorch_vggblstmp_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta/results/snapshot_backup_20
-#resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.5_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta/results/snapshot_backup_43
-#resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/old_expts_before_12th_Aug/train_mixed_new_0.25_pytorch_vggblstm_e3_subsample2_2_2_unit1024_proj1024_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.0_bs12_mli600_mlo150_beamsize_10_delta/results/snapshot_backup_40
 # general configuration
 backend=pytorch
-stage=4     # start from -1 if you need to start from data download
+stage=1     # start from -1 if you need to start from data download
 stop_stage=2
 ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu2
 debugmode=1
@@ -59,7 +55,7 @@ drop=0.5 #dropout changed to 0.2 by vinit
 # optimization related
 sortagrad=0 # Feed samples from shortest to longest ; -1: enabled for all epochs, 0: disabled, other: enabled for 'other' epochs
 opt=adadelta
-epochs=400
+epochs=80
 patience=10
 
 # rnnlm related
@@ -73,16 +69,15 @@ lm_patience=3
 lm_maxlen=40      # if sentence length > lm_maxlen, lm_batchsize is automatically reduced
 
 lm_resume=
-#lm_resume=exp/train_rnnlm_pytorch_1layer_unit1024_sgd_bs1024_unigram5000/snapshot.ep.11         #specify a snapshot file to resume LM training
 lmtag=            # tag for managing LMs
 
 # decoding parameter
-lm_weight=0 #0.7
-beam_size=10
-penalty=0.1
-maxlenratio=0.8
-minlenratio=0.2
-ctc_weight=0
+lm_weight=0.1 #0.7
+beam_size=4
+penalty=0.0
+maxlenratio=0.0
+minlenratio=0.0
+ctc_weight=0.0
 recog_model=model.acc.best # set a model to be used for decoding: 'model.acc.best' or 'model.loss.best'
 
 # scheduled sampling option
@@ -117,14 +112,24 @@ tag=
 set -e
 set -u
 set -o pipefail
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=2
 echo CUDA_VISIBLE_DEVICES $CUDA_VISIBLE_DEVICES
 
-pairwise=True
-pair_threshold=0.7
-pair_cutoff=10
-pair_lambda=0.0005
-pair_alpha=1.0
+
+####If pairwise is true change values below. Else uncomment the pirwise False to eansure simpler folder creations
+
+#pairwise=True
+#pair_threshold=0.7
+#pair_cutoff=10
+#pair_lambda=0.0005
+#pair_alpha=1.0
+
+
+pairwise=False
+pair_threshold=0
+pair_cutoff=0
+pair_lambda=0
+pair_alpha=0
 
 
 
@@ -132,13 +137,15 @@ pair_alpha=1.0
 #train_set=train_us_orig
 #train_dev=test_us_orig
 
-train_set=train_paired_0.25
-train_dev=test_non_us_mp3
+#train_set=train_paired_0.5
+#train_dev=test_non_us_mp3
 
-#train_set=train_mixed_new_0.5
-#train_dev=test_us_mixed_0.5
+train_set=train_mixed_0.1
+train_dev=test_us_mixed_0.1
 
-recog_set="test_non_us_mp3"
+#recog_set="test_non_us_orig"
+#recog_set="test_us_mixed_0.1"
+recog_set="test_non_us_mixed_0.1"
 ###### Ignore stage -1 as we are not downloading the data
 ######
 if [ ${stage} -le -1 ] && [ ${stop_stage} -ge -1 ]; then
@@ -171,23 +178,25 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     #for x in test_non_us_mp3 test_us_mp3 train_us_mp3 train_non_us_mp3; do
     #for x in train_mixed_0.1 train_mixed_0.25 train_mixed_0.5; do
 #    for x in train_non_us_0.1 train_non_us_0.25 train_non_us_0.5; do
+#    for x in test_non_us_mp3; do
 #        steps/make_fbank_pitch.sh --cmd "$train_cmd" --nj 32 --write_utt2num_frames true \
 #            data/${x} exp/make_fbank/${x} ${fbankdir}
 #        utils/fix_data_dir.sh data/${x}
 #    done
 # Check if it is better to just use combine data
-    #utils/combine_data.sh --extra_files utt2num_frames data/${train_set}_org data/train_us_mp3 data/train_non_us_0.5
-    utils/combine_data.sh --extra_files utt2num_frames data/${train_set}_org data/train_non_us_0.5
-    utils/combine_data.sh --extra_files utt2num_frames data/${train_dev}_org data/test_us_mp3
+#    utils/combine_data.sh --extra_files utt2num_frames data/${train_set}_org data/train_us_mp3 data/train_non_us_0.25
+    #utils/combine_data.sh --extra_files utt2num_frames data/${train_set}_org data/train_non_us_0.5
+ #   utils/combine_data.sh --extra_files utt2num_frames data/${train_dev}_org data/test_us_mp3
     #utils/combine_data.sh --extra_files utt2num_frames data/${train_set}_org data/train_us_mp3
+    utils/combine_data.sh --extra_files utt2num_frames data/${recog_set} data/test_non_us_mp3
 
 
 
 
     # remove utt having more than 3000 frames
     # remove utt having more than 400 characters
-    remove_longshortdata.sh --maxframes 3000 --maxchars 400 data/${train_set}_org data/${train_set}
-    remove_longshortdata.sh --maxframes 3000 --maxchars 400 data/${train_dev}_org data/${train_dev}
+#    remove_longshortdata.sh --maxframes 3000 --maxchars 400 data/${train_set}_org data/${train_set}
+#    remove_longshortdata.sh --maxframes 3000 --maxchars 400 data/${train_dev}_org data/${train_dev}
 
 
     # compute global CMVN
@@ -207,13 +216,13 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
         ${feat_dt_dir}/storage
     fi
     dump.sh --cmd "$train_cmd" --nj 40 --do_delta ${do_delta} \
-        data/${train_set}/feats.scp data/${train_set}/cmvn.ark exp/dump_feats/train ${feat_tr_dir}
+        data/${train_set}/feats.scp data/${train_set}/cmvn.ark exp_fresh/dump_feats/train ${feat_tr_dir}
     dump.sh --cmd "$train_cmd" --nj 32 --do_delta ${do_delta} \
-        data/${train_dev}/feats.scp data/${train_set}/cmvn.ark exp/dump_feats/dev ${feat_dt_dir}
+        data/${train_dev}/feats.scp data/${train_set}/cmvn.ark exp_fresh/dump_feats/dev ${feat_dt_dir}
     for rtask in ${recog_set}; do
         feat_recog_dir=${dumpdir}/${rtask}/delta${do_delta}; mkdir -p ${feat_recog_dir}
         dump.sh --cmd "$train_cmd" --nj 32 --do_delta ${do_delta} \
-            data/${rtask}/feats.scp data/${train_set}/cmvn.ark exp/dump_feats/recog/${rtask} \
+            data/${rtask}/feats.scp data/${train_set}/cmvn.ark exp_fresh/dump_feats/recog/${rtask} \
             ${feat_recog_dir}
     done
 fi
@@ -247,8 +256,8 @@ fi
 dict=data/lang_char/${train_set}_${bpemode}${nbpe}_units.txt
 bpemodel=data/lang_char/${train_set}_${bpemode}${nbpe}
 
-dict=data/lang_char/train_us_orig_unigram1000_units.txt
-bpemodel=data/lang_char/train_us_orig_unigram1000
+#dict=data/lang_char/train_us_orig_unigram1000_units.txt
+#bpemodel=data/lang_char/train_us_orig_unigram1000
 
 echo "dictionary: ${dict}"
 if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
@@ -258,10 +267,10 @@ if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
     echo "stage 2: Dictionary and Json Data Preparation"
     mkdir -p data/lang_char/
 	echo "New dir made"
-    #echo "<unk> 1" > ${dict} # <unk> must be 1, 0 will be used for "blank" in CTC
+    echo "<unk> 1" > ${dict} # <unk> must be 1, 0 will be used for "blank" in CTC
     cut -f 2- -d" " data/${train_set}/text > data/lang_char/input.txt
-    #spm_train --input=data/lang_char/input.txt --vocab_size=${nbpe} --model_type=${bpemode} --model_prefix=${bpemodel} --input_sentence_size=100000000
-    #spm_encode --model=${bpemodel}.model --output_format=piece < data/lang_char/input.txt | tr ' ' '\n' | sort | uniq | awk '{print $0 " " NR+1}' >> ${dict}
+    spm_train --input=data/lang_char/input.txt --vocab_size=${nbpe} --model_type=${bpemode} --model_prefix=${bpemodel} --input_sentence_size=100000000
+    spm_encode --model=${bpemodel}.model --output_format=piece < data/lang_char/input.txt | tr ' ' '\n' | sort | uniq | awk '{print $0 " " NR+1}' >> ${dict}
     wc -l ${dict}
 
     # make json labels
@@ -282,7 +291,7 @@ if [ -z ${lmtag} ]; then
     lmtag=${lm_layers}layer_unit${lm_units}_${lm_opt}_bs${lm_batchsize}
 fi
 lmexpname=train_rnnlm_${backend}_${lmtag}_${bpemode}${nbpe}
-lmexpdir=exp/${lmexpname}
+lmexpdir=exp_fresh/${lmexpname}
 mkdir -p ${lmexpdir}
 
 if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
@@ -312,7 +321,7 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
         --backend ${backend} \
         --verbose 1 \
         --outdir ${lmexpdir} \
-        --tensorboard-dir tensorboard/${lmexpname} \
+        --tensorboard-dir tensorboard_fresh/${lmexpname} \
         --train-label ${lmdatadir}/train.txt \
         --valid-label ${lmdatadir}/valid.txt \
         --resume ${lm_resume} \
@@ -328,24 +337,25 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
 fi
 
 if [ -z ${tag} ]; then
-    expname=${train_set}_${backend}_${etype}_e${elayers}_subsample${subsample}_unit${eunits}_proj${eprojs}_d${dlayers}_unit${dunits}_${atype}_aconvc${aconv_chans}_aconvf${aconv_filts}_mtlalpha${mtlalpha}_drop${drop}_${opt}_sampprob${samp_prob}_bs${batchsize}_mli${maxlen_in}_mlo${maxlen_out}_beamsize_${beam_size}_pairwise${pairwise}_pairthrshld${pair_threshold}_paircutoff${pair_cutoff}_pairlmbda${pair_lambda}_pairalpha${pair_alpha}
+    expname=${train_set}_${backend}/${etype}_e${elayers}/subsample${subsample}_unit${eunits}_proj${eprojs}/d${dlayers}_unit${dunits}/${atype}_aconvc${aconv_chans}_aconvf${aconv_filts}/mtlalpha${mtlalpha}/drop${drop}/${opt}/sampprob${samp_prob}/bs${batchsize}/mli${maxlen_in}_mlo${maxlen_out}_beamsize_${beam_size}/pairwise${pairwise}_pairthrshld${pair_threshold}_paircutoff${pair_cutoff}_pairlmbda${pair_lambda}_pairalpha${pair_alpha}
     if ${do_delta}; then
         expname=${expname}_delta
     fi
 else
     expname=${train_set}_${backend}_${tag}
 fi
-expdir=exp/${expname}
-stop_stage=10
+expdir=exp_fresh/${expname}
+#stop_stage=10
 if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
 	mkdir -p ${expdir}
     echo "stage 4: Network Training"
+	echo ${expdir}
     ${cuda_cmd} --gpu ${ngpu} ${expdir}/train.log \
         asr_train.py \
         --ngpu ${ngpu} \
         --backend ${backend} \
         --outdir ${expdir}/results \
-        --tensorboard-dir tensorboard_mixed/${expname} \
+        --tensorboard-dir tensorboard_fresh/${expname} \
         --debugmode ${debugmode} \
         --dict ${dict} \
         --debugdir ${expdir} \
@@ -385,18 +395,15 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
 	--pair-alpha ${pair_alpha}
 fi
 
+stop_stage=10
+
 if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
     echo "stage 5: Decoding"
-    nj=32
+    nj=28
 
     pids=() # initialize pids
     for rtask in ${recog_set}; do
     (
-        #expdir=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.5_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta
-	#	expdir=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.1_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta
-		#expdir=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.25_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta
-		#expdir=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_us_orig_pytorch_vggblstmp_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta
-		#expdir=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp/train_mixed_new_0.25_pytorch_vggblstm_e3_subsample2_2_2_unit512_proj512_d1_unit512_location_aconvc10_aconvf100_mtlalpha0.0_drop0.5_adadelta_sampprob0.3_bs12_mli600_mlo150_beamsize_10_delta
 		decode_dir=decode_${rtask}_beam${beam_size}_e${recog_model}_p${penalty}_len${minlenratio}-${maxlenratio}_ctcw${ctc_weight}_rnnlm${lm_weight}_${lmtag}
         feat_recog_dir=${dumpdir}/${rtask}/delta${do_delta}
 

@@ -44,7 +44,8 @@ def batchfy_by_seq(
         # if ilen = 1000 and max_length_in = 800
         # then b = batchsize / 2
         # and max(min_batches, .) avoids batchsize = 0
-        bs = max(min_batch_size, int(batch_size / (1 + factor)))
+        #bs = max(min_batch_size, int(batch_size / (1 + factor)))
+        bs = max(min_batch_size, int(batch_size / (2 ** factor)))
         end = min(len(sorted_data), start + bs)
         minibatch = sorted_data[start:end]
         if shortest_first:
@@ -373,9 +374,9 @@ def make_batchset(data, batch_size=0, max_length_in=float("inf"), max_length_out
             for i in np.random.permutation(range(len(temp_p))):
                 temp_sorted.append(temp_p[i])
                 temp_sorted.append(temp_q[i])
+                sorted_data = temp_sorted
 
-            sorted_data = temp_sorted
-            logging.info('sorted_data '+ str(sorted_data))
+            #logging.info('sorted_data '+ str(sorted_data))
 
 ##End of modif for pairwise
 

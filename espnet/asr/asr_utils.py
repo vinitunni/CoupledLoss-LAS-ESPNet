@@ -379,9 +379,12 @@ def torch_resume(snapshot_path, trainer):
             trainer.updater.model.module.load_state_dict(snapshot_dict['model'])
         else:
             trainer.updater.model.load_state_dict(snapshot_dict['model'])
+    #DIRTY hack to restire eps to higher value when restoring. Find the proper way
+    #states = list(snapshot_dict['optimiser']['state'].keys())
+    #snapshot_dict['optimizer']['param_groups'][0]['eps']=1e-6
 
     # retore optimizer states
-    trainer.updater.get_optimizer('main').load_state_dict(snapshot_dict['optimizer'])
+    #trainer.updater.get_optimizer('main').load_state_dict(snapshot_dict['optimizer'])
 
     # delete opened snapshot
     del snapshot_dict

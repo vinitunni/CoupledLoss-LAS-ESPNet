@@ -1,0 +1,26 @@
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_us_orig_unigram1000_units.txt
+stage 2: Dictionary and Json Data Preparation
+New dir made
+1106 data/lang_char/train_us_orig_unigram1000_units.txt
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_us_orig_unigram1000_units.txt
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_us_orig_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_us_orig_unigram1000_units.txt
+stage 4: Network Training
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_us_orig_unigram1000_units.txt
+stage 4: Network Training

@@ -1,0 +1,59 @@
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 2
+stage 1: Feature Generation
+steps/make_fbank_pitch.sh --cmd run.pl --nj 32 --write_utt2num_frames true data/test_non_us_mp3 exp/make_fbank/test_non_us_mp3 fbank
+steps/make_fbank_pitch.sh: moving data/test_non_us_mp3/feats.scp to data/test_non_us_mp3/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/test_non_us_mp3
+steps/make_fbank_pitch.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.
+run.pl: 32 / 32 failed, log is in exp/make_fbank/test_non_us_mp3/make_fbank_pitch_test_non_us_mp3.*.log
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 2
+stage 1: Feature Generation
+steps/make_fbank_pitch.sh --cmd run.pl --nj 32 --write_utt2num_frames true data/test_non_us_mp3 exp/make_fbank/test_non_us_mp3 fbank
+utils/validate_data_dir.sh: Successfully validated data-directory data/test_non_us_mp3
+steps/make_fbank_pitch.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.
+It seems not all of the feature files were successfully processed (13126 != 13129);
+consider using utils/fix_data_dir.sh data/test_non_us_mp3
+Succeeded creating filterbank & pitch features for test_non_us_mp3
+fix_data_dir.sh: kept 13126 utterances out of 13129
+fix_data_dir.sh: old files are kept in data/test_non_us_mp3/.backup
+utils/combine_data.sh --extra_files utt2num_frames data/test_non_us_orig data/test_non_us_mp3
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh: combined feats.scp
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+utils/combine_data.sh: combined utt2num_frames
+fix_data_dir.sh: kept all 13126 utterances.
+fix_data_dir.sh: old files are kept in data/test_non_us_orig/.backup
+extract utterances having less than 3000 or more than 10 frames
+utils/data/get_utt2num_frames.sh: data/train_us_orig_org/utt2num_frames already present!
+extract utterances having less than 400 or more than 0 characters
+Reduced #utt from 99933 to 99933
+fix_data_dir.sh: kept all 99933 utterances.
+fix_data_dir.sh: old files are kept in data/train_us_orig/.backup
+change from 99933 to 99933
+extract utterances having less than 3000 or more than 10 frames
+utils/data/get_utt2num_frames.sh: data/test_us_orig_org/utt2num_frames already present!
+extract utterances having less than 400 or more than 0 characters
+Reduced #utt from 11527 to 11527
+fix_data_dir.sh: kept all 11527 utterances.
+fix_data_dir.sh: old files are kept in data/test_us_orig/.backup
+change from 11527 to 11527
+compute-cmvn-stats scp:data/train_us_orig/feats.scp data/train_us_orig/cmvn.ark 
+LOG (compute-cmvn-stats[5.5.367~1-17350]:main():compute-cmvn-stats.cc:168) Wrote global CMVN stats to data/train_us_orig/cmvn.ark
+LOG (compute-cmvn-stats[5.5.367~1-17350]:main():compute-cmvn-stats.cc:171) Done accumulating CMVN stats for 99933 utterances; 0 had errors.
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/dump.sh --cmd run.pl --nj 40 --do_delta true data/train_us_orig/feats.scp data/train_us_orig/cmvn.ark exp_fresh/dump_feats/train dump/train_us_orig/deltatrue
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/dump.sh --cmd run.pl --nj 32 --do_delta true data/test_us_orig/feats.scp data/train_us_orig/cmvn.ark exp_fresh/dump_feats/dev dump/test_us_orig/deltatrue
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/dump.sh --cmd run.pl --nj 32 --do_delta true data/test_non_us_orig/feats.scp data/train_us_orig/cmvn.ark exp_fresh/dump_feats/recog/test_non_us_orig dump/test_non_us_orig/deltatrue
+dictionary: data/lang_char/train_us_orig_unigram1000_units.txt

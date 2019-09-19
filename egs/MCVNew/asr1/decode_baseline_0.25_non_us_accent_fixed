@@ -1,0 +1,202 @@
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 2
+stage 1: Feature Generation
+utils/combine_data.sh --extra_files utt2num_frames data/train_mixed_0.25_org data/train_us_mp3 data/train_non_us_0.25
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh: combined feats.scp
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+utils/combine_data.sh: combined utt2num_frames
+fix_data_dir.sh: kept all 125697 utterances.
+fix_data_dir.sh: old files are kept in data/train_mixed_0.25_org/.backup
+utils/combine_data.sh --extra_files utt2num_frames data/test_us_mixed_0.25_org data/test_us_mp3
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh: combined feats.scp
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+utils/combine_data.sh: combined utt2num_frames
+fix_data_dir.sh: kept all 11527 utterances.
+fix_data_dir.sh: old files are kept in data/test_us_mixed_0.25_org/.backup
+utils/combine_data.sh --extra_files utt2num_frames data/test_non_us_mixed_0.25 data/test_non_us_mp3
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh: combined feats.scp
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+utils/combine_data.sh: combined utt2num_frames
+fix_data_dir.sh: kept all 11527 utterances.
+fix_data_dir.sh: old files are kept in data/test_non_us_mixed_0.25/.backup
+extract utterances having less than 3000 or more than 10 frames
+utils/data/get_utt2num_frames.sh: data/train_mixed_0.25_org/utt2num_frames already present!
+extract utterances having less than 400 or more than 0 characters
+Reduced #utt from 125697 to 125697
+fix_data_dir.sh: kept all 125697 utterances.
+fix_data_dir.sh: old files are kept in data/train_mixed_0.25/.backup
+change from 125697 to 125697
+extract utterances having less than 3000 or more than 10 frames
+utils/data/get_utt2num_frames.sh: data/test_us_mixed_0.25_org/utt2num_frames already present!
+extract utterances having less than 400 or more than 0 characters
+Reduced #utt from 11527 to 11527
+fix_data_dir.sh: kept all 11527 utterances.
+fix_data_dir.sh: old files are kept in data/test_us_mixed_0.25/.backup
+change from 11527 to 11527
+compute-cmvn-stats scp:data/train_mixed_0.25/feats.scp data/train_mixed_0.25/cmvn.ark 
+LOG (compute-cmvn-stats[5.5.367~1-17350]:main():compute-cmvn-stats.cc:168) Wrote global CMVN stats to data/train_mixed_0.25/cmvn.ark
+LOG (compute-cmvn-stats[5.5.367~1-17350]:main():compute-cmvn-stats.cc:171) Done accumulating CMVN stats for 125697 utterances; 0 had errors.
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/dump.sh --cmd run.pl --nj 40 --do_delta true data/train_mixed_0.25/feats.scp data/train_mixed_0.25/cmvn.ark exp_fresh/dump_feats/train dump/train_mixed_0.25/deltatrue
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/dump.sh --cmd run.pl --nj 32 --do_delta true data/test_us_mixed_0.25/feats.scp data/train_mixed_0.25/cmvn.ark exp_fresh/dump_feats/dev dump/test_us_mixed_0.25/deltatrue
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/dump.sh --cmd run.pl --nj 32 --do_delta true data/test_non_us_mixed_0.25/feats.scp data/train_mixed_0.25/cmvn.ark exp_fresh/dump_feats/recog/test_non_us_mixed_0.25 dump/test_non_us_mixed_0.25/deltatrue
+dictionary: data/lang_char/train_mixed_0.25_unigram1000_units.txt
+stage 2: Dictionary and Json Data Preparation
+New dir made
+sentencepiece_trainer.cc(49) LOG(INFO) Starts training with : 
+TrainerSpec {
+  input: data/lang_char/input.txt
+  input_format: 
+  model_prefix: data/lang_char/train_mixed_0.25_unigram1000
+  model_type: UNIGRAM
+  vocab_size: 1000
+  self_test_sample_size: 0
+  character_coverage: 0.9995
+  input_sentence_size: 100000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  treat_whitespace_as_suffix: 0
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+}
+NormalizerSpec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 1
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+
+trainer_interface.cc(267) LOG(INFO) Loading corpus: data/lang_char/input.txt
+trainer_interface.cc(315) LOG(INFO) Loaded all 125697 sentences
+trainer_interface.cc(330) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(330) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(330) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(335) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(384) LOG(INFO) all chars count=6004810
+trainer_interface.cc(392) LOG(INFO) Done: 99.9681% characters are covered.
+trainer_interface.cc(402) LOG(INFO) Alphabet size=28
+trainer_interface.cc(403) LOG(INFO) Final character coverage=0.999681
+trainer_interface.cc(435) LOG(INFO) Done! preprocessed 125697 sentences.
+unigram_model_trainer.cc(129) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(133) LOG(INFO) Extracting frequent sub strings...
+unigram_model_trainer.cc(184) LOG(INFO) Initialized 81422 seed sentencepieces
+trainer_interface.cc(441) LOG(INFO) Tokenizing input sentences with whitespace: 125697
+trainer_interface.cc(451) LOG(INFO) Done! 33966
+unigram_model_trainer.cc(470) LOG(INFO) Using 33966 sentences for EM training
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=29524 obj=9.66737 num_tokens=61310 num_tokens/piece=2.07662
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=22942 obj=7.90616 num_tokens=62066 num_tokens/piece=2.70534
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=17204 obj=7.84908 num_tokens=66413 num_tokens/piece=3.86032
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=17188 obj=7.83093 num_tokens=66439 num_tokens/piece=3.86543
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=12891 obj=7.89132 num_tokens=74745 num_tokens/piece=5.79823
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=12891 obj=7.87403 num_tokens=74828 num_tokens/piece=5.80467
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=9668 obj=7.98646 num_tokens=84241 num_tokens/piece=8.71338
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=9668 obj=7.96052 num_tokens=84251 num_tokens/piece=8.71442
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=7251 obj=8.14279 num_tokens=92979 num_tokens/piece=12.8229
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=7251 obj=8.10224 num_tokens=92978 num_tokens/piece=12.8228
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=5438 obj=8.3456 num_tokens=101079 num_tokens/piece=18.5875
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=5438 obj=8.29548 num_tokens=101089 num_tokens/piece=18.5894
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=4078 obj=8.59061 num_tokens=108211 num_tokens/piece=26.5353
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=4078 obj=8.53464 num_tokens=108222 num_tokens/piece=26.538
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=3058 obj=8.87827 num_tokens=114879 num_tokens/piece=37.5667
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=3058 obj=8.81514 num_tokens=114871 num_tokens/piece=37.5641
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=2293 obj=9.18653 num_tokens=121231 num_tokens/piece=52.87
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=2293 obj=9.11894 num_tokens=121230 num_tokens/piece=52.8696
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=1719 obj=9.51364 num_tokens=127625 num_tokens/piece=74.2437
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=1719 obj=9.44141 num_tokens=127618 num_tokens/piece=74.2397
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=1289 obj=9.85787 num_tokens=133878 num_tokens/piece=103.862
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=1289 obj=9.78155 num_tokens=133900 num_tokens/piece=103.879
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=1100 obj=10.0163 num_tokens=136951 num_tokens/piece=124.501
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=1100 obj=9.97267 num_tokens=136989 num_tokens/piece=124.535
+trainer_interface.cc(507) LOG(INFO) Saving model: data/lang_char/train_mixed_0.25_unigram1000.model
+trainer_interface.cc(531) LOG(INFO) Saving vocabs: data/lang_char/train_mixed_0.25_unigram1000.vocab
+1108 data/lang_char/train_mixed_0.25_unigram1000_units.txt
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/data2json.sh --feat dump/train_mixed_0.25/deltatrue/feats.scp --bpecode data/lang_char/train_mixed_0.25_unigram1000.model data/train_mixed_0.25 data/lang_char/train_mixed_0.25_unigram1000_units.txt
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/feat_to_shape.sh --cmd run.pl --nj 1 --filetype  --preprocess-conf  --verbose 0 dump/train_mixed_0.25/deltatrue/feats.scp data/train_mixed_0.25/tmp-tCDS1/input/shape.scp
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/data2json.sh --feat dump/test_us_mixed_0.25/deltatrue/feats.scp --bpecode data/lang_char/train_mixed_0.25_unigram1000.model data/test_us_mixed_0.25 data/lang_char/train_mixed_0.25_unigram1000_units.txt
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/feat_to_shape.sh --cmd run.pl --nj 1 --filetype  --preprocess-conf  --verbose 0 dump/test_us_mixed_0.25/deltatrue/feats.scp data/test_us_mixed_0.25/tmp-6Z93U/input/shape.scp
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 1974 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 2030 with 1
+sym2int.pl: replacing 1940 with 1
+sym2int.pl: replacing 41 with 1
+** Replaced 8 instances of OOVs with 1
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/data2json.sh --feat dump/test_non_us_mixed_0.25/deltatrue/feats.scp --bpecode data/lang_char/train_mixed_0.25_unigram1000.model data/test_non_us_mixed_0.25 data/lang_char/train_mixed_0.25_unigram1000_units.txt
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/feat_to_shape.sh --cmd run.pl --nj 1 --filetype  --preprocess-conf  --verbose 0 dump/test_non_us_mixed_0.25/deltatrue/feats.scp data/test_non_us_mixed_0.25/tmp-abrbg/input/shape.scp
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 1974 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 2030 with 1
+sym2int.pl: replacing 1940 with 1
+sym2int.pl: replacing 41 with 1
+** Replaced 8 instances of OOVs with 1
+stage 5: Decoding
+2019-09-18 12:57:46,551 (splitjson:35) INFO: /home/vinit/exp/espnet-0.4.0/tools/venv/bin/python /home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/splitjson.py --parts 28 dump/test_non_us_mixed_0.25/deltatrue/data_unigram1000.json
+2019-09-18 12:57:47,112 (splitjson:47) INFO: number of utterances = 11527
+2019-09-18 14:56:08,108 (concatjson:31) INFO: /home/vinit/exp/espnet-0.4.0/tools/venv/bin/python /home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/concatjson.py exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.1.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.10.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.11.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.12.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.13.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.14.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.15.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.16.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.17.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.18.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.19.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.2.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.20.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.21.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.22.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.23.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.24.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.25.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.26.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.27.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.28.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.3.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.4.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.5.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.6.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.7.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.8.json exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.9.json
+2019-09-18 14:56:08,223 (concatjson:41) INFO: new json has 11527 utterances
+2019-09-18 14:56:08,962 (json2trn:38) INFO: /home/vinit/exp/espnet-0.4.0/tools/venv/bin/python /home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/json2trn.py exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.json data/lang_char/train_mixed_0.25_unigram1000_units.txt --num-spkrs 1 --refs exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/ref.trn --hyps exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/hyp.trn
+2019-09-18 14:56:08,962 (json2trn:40) INFO: reading exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/data.json
+2019-09-18 14:56:09,090 (json2trn:44) INFO: reading data/lang_char/train_mixed_0.25_unigram1000_units.txt
+write a CER (or TER) result in exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/result.txt
+|           SPKR                                                                                                                                        |           # Snt                      # Wrd            |           Corr                        Sub                         Del                        Ins                         Err                      S.Err            |
+|           Sum/Avg                                                                                                                                     |          11527                      192280            |           70.2                       26.2                         3.6                       32.2                        62.0                       97.5            |
+write a WER result in exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mixed_0.25_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/result.wrd.txt
+|           SPKR                                                                                                                                        |           # Snt                      # Wrd            |           Corr                          Sub                         Del                         Ins                         Err                       S.Err            |
+|           Sum/Avg                                                                                                                                     |          11527                       102904           |           64.3                         31.9                         3.9                        13.3                        49.0                        97.4            |
+Finished

@@ -1,0 +1,36 @@
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_paired_0.1_unigram1000_units.txt
+stage 5: Decoding
+./run_fresh.sh: 1 background jobs are failed.
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.1_unigram1000_units.txt
+stage 5: Decoding
+./run_fresh.sh: 1 background jobs are failed.
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_mixed_new_0.1_unigram1000_units.txt
+stage 5: Decoding
+./run_fresh.sh: 1 background jobs are failed.
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_paired_0.1_unigram1000_units.txt
+stage 5: Decoding
+./run_fresh.sh: 1 background jobs are failed.
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 1
+dictionary: data/lang_char/train_paired_0.1_unigram1000_units.txt
+stage 5: Decoding
+write a CER (or TER) result in exp_fresh/train_paired_0.1_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mp3_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/result.txt
+|           SPKR                                                                                                                                       |           # Snt                     # Wrd           |           Corr                        Sub                        Del                       Ins                        Err                      S.Err           |
+|           Sum/Avg                                                                                                                                    |          11527                     192928           |            7.9                       89.7                        2.4                      30.2                      122.3                      100.0           |
+write a WER result in exp_fresh/train_paired_0.1_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_non_us_mp3_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/result.wrd.txt
+|           SPKR                                                                                                                                       |           # Snt                      # Wrd           |           Corr                        Sub                         Del                        Ins                        Err                       S.Err           |
+|           Sum/Avg                                                                                                                                    |          11527                       97379           |            2.9                       94.4                         2.8                       16.0                      113.1                       100.0           |
+Finished

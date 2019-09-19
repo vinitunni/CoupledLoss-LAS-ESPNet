@@ -1,0 +1,6 @@
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 0
+dictionary: data/lang_char/train_us_orig_unigram150_units.txt
+stage 4: Network Training
+exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample1_2_2_1_1_unit1024_proj1024/d2_unit1024/location_aconvc10_aconvf100/mtlalpha0.5/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_20/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta

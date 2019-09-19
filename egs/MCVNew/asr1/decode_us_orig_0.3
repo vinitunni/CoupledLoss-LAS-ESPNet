@@ -1,0 +1,33 @@
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 2
+dictionary: data/lang_char/train_us_orig_unigram1000_units.txt
+stage 2: Dictionary and Json Data Preparation
+New dir made
+1106 data/lang_char/train_us_orig_unigram1000_units.txt
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 2
+dictionary: data/lang_char/train_us_orig_unigram1000_units.txt
+stage 2: Dictionary and Json Data Preparation
+New dir made
+1106 data/lang_char/train_us_orig_unigram1000_units.txt
+stage 5: Decoding
+write a CER (or TER) result in exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_us_orig_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/result.txt
+write a WER result in exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_us_orig_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/result.wrd.txt
+./run_fresh.sh: 1 background jobs are failed.
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 2
+dictionary: data/lang_char/train_us_orig_unigram1000_units.txt
+stage 2: Dictionary and Json Data Preparation
+New dir made
+1106 data/lang_char/train_us_orig_unigram1000_units.txt
+stage 5: Decoding
+write a CER (or TER) result in exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_us_orig_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/result.txt
+|          SPKR                                                                                                                                       |          # Snt                     # Wrd           |          Corr                        Sub                       Del                       Ins                       Err                     S.Err           |
+|          Sum/Avg                                                                                                                                    |         11527                     192928           |          56.3                       38.7                       5.1                      32.7                      76.5                      99.0           |
+write a WER result in exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/decode_test_us_orig_beam10_emodel.acc.best_p0.1_len0.2-0.8_ctcw0_rnnlm0_1layer_unit1024_sgd_bs1024/result.wrd.txt
+|           SPKR                                                                                                                                       |          # Snt                     # Wrd           |           Corr                       Sub                        Del                        Ins                       Err                      S.Err           |
+|           Sum/Avg                                                                                                                                    |         11527                      102904          |           51.6                      42.3                        6.1                       12.4                      60.7                       99.0           |
+Finished

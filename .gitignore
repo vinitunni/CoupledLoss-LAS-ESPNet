@@ -24,10 +24,12 @@ egs/*/*/downloads
 egs/*/*/dump
 egs/*/*/enhan
 egs/*/*/exp
+egs/*/*/exp_fresh
 egs/*/*/fbank
 egs/*/*/mfcc
 egs/*/*/stft
 egs/*/*/tensorboard
+egs/*/*/tensorboard*
 egs/*/*/wav*
 
 # tools related

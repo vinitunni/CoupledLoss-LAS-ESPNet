@@ -1,0 +1,143 @@
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 2
+dictionary: data/lang_char/train_us_orig_unigram150_units.txt
+stage 2: Dictionary and Json Data Preparation
+New dir made
+sentencepiece_trainer.cc(49) LOG(INFO) Starts training with : 
+TrainerSpec {
+  input: data/lang_char/input.txt
+  input_format: 
+  model_prefix: data/lang_char/train_us_orig_unigram150
+  model_type: UNIGRAM
+  vocab_size: 150
+  self_test_sample_size: 0
+  character_coverage: 0.9995
+  input_sentence_size: 100000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  treat_whitespace_as_suffix: 0
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+}
+NormalizerSpec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 1
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+
+trainer_interface.cc(267) LOG(INFO) Loading corpus: data/lang_char/input.txt
+trainer_interface.cc(315) LOG(INFO) Loaded all 99933 sentences
+trainer_interface.cc(330) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(330) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(330) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(335) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(384) LOG(INFO) all chars count=4795523
+trainer_interface.cc(392) LOG(INFO) Done: 99.9669% characters are covered.
+trainer_interface.cc(402) LOG(INFO) Alphabet size=28
+trainer_interface.cc(403) LOG(INFO) Final character coverage=0.999669
+trainer_interface.cc(435) LOG(INFO) Done! preprocessed 99933 sentences.
+unigram_model_trainer.cc(129) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(133) LOG(INFO) Extracting frequent sub strings...
+unigram_model_trainer.cc(184) LOG(INFO) Initialized 73935 seed sentencepieces
+trainer_interface.cc(441) LOG(INFO) Tokenizing input sentences with whitespace: 99933
+trainer_interface.cc(451) LOG(INFO) Done! 30817
+unigram_model_trainer.cc(470) LOG(INFO) Using 30817 sentences for EM training
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=26907 obj=9.69796 num_tokens=55410 num_tokens/piece=2.05932
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=21053 obj=7.95302 num_tokens=56058 num_tokens/piece=2.66271
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=15788 obj=7.89671 num_tokens=60084 num_tokens/piece=3.80568
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=15775 obj=7.87687 num_tokens=60112 num_tokens/piece=3.81059
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=11831 obj=7.94632 num_tokens=67776 num_tokens/piece=5.72868
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=11831 obj=7.92737 num_tokens=67769 num_tokens/piece=5.72809
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=8873 obj=8.05354 num_tokens=76133 num_tokens/piece=8.5803
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=8872 obj=8.02501 num_tokens=76138 num_tokens/piece=8.58183
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=6654 obj=8.22034 num_tokens=84046 num_tokens/piece=12.6309
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=6654 obj=8.17607 num_tokens=84040 num_tokens/piece=12.63
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=4990 obj=8.4405 num_tokens=91485 num_tokens/piece=18.3337
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=4990 obj=8.3862 num_tokens=91497 num_tokens/piece=18.3361
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=3742 obj=8.69704 num_tokens=98481 num_tokens/piece=26.3177
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=3742 obj=8.63898 num_tokens=98480 num_tokens/piece=26.3175
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=2806 obj=8.9865 num_tokens=104587 num_tokens/piece=37.2726
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=2806 obj=8.92357 num_tokens=104597 num_tokens/piece=37.2762
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=2104 obj=9.29348 num_tokens=110545 num_tokens/piece=52.5404
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=2104 obj=9.22515 num_tokens=110545 num_tokens/piece=52.5404
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=1578 obj=9.6438 num_tokens=116407 num_tokens/piece=73.7687
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=1578 obj=9.57018 num_tokens=116424 num_tokens/piece=73.7795
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=1183 obj=9.99922 num_tokens=121799 num_tokens/piece=102.958
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=1183 obj=9.91883 num_tokens=121811 num_tokens/piece=102.968
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=887 obj=10.3538 num_tokens=127445 num_tokens/piece=143.681
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=887 obj=10.2651 num_tokens=127432 num_tokens/piece=143.666
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=665 obj=10.7297 num_tokens=132467 num_tokens/piece=199.198
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=665 obj=10.6395 num_tokens=132461 num_tokens/piece=199.189
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=498 obj=11.1113 num_tokens=138685 num_tokens/piece=278.484
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=498 obj=10.9987 num_tokens=138738 num_tokens/piece=278.59
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=373 obj=11.5136 num_tokens=144339 num_tokens/piece=386.968
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=373 obj=11.3978 num_tokens=144380 num_tokens/piece=387.078
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=279 obj=11.9409 num_tokens=151333 num_tokens/piece=542.412
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=279 obj=11.7973 num_tokens=151342 num_tokens/piece=542.444
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=209 obj=12.3272 num_tokens=160590 num_tokens/piece=768.373
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=209 obj=12.1439 num_tokens=160639 num_tokens/piece=768.608
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=0 size=165 obj=12.5953 num_tokens=167461 num_tokens/piece=1014.92
+unigram_model_trainer.cc(486) LOG(INFO) EM sub_iter=1 size=165 obj=12.4294 num_tokens=167462 num_tokens/piece=1014.92
+trainer_interface.cc(507) LOG(INFO) Saving model: data/lang_char/train_us_orig_unigram150.model
+trainer_interface.cc(531) LOG(INFO) Saving vocabs: data/lang_char/train_us_orig_unigram150.vocab
+256 data/lang_char/train_us_orig_unigram150_units.txt
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/data2json.sh --feat dump/train_us_orig/deltatrue/feats.scp --bpecode data/lang_char/train_us_orig_unigram150.model data/train_us_orig data/lang_char/train_us_orig_unigram150_units.txt
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/feat_to_shape.sh --cmd run.pl --nj 1 --filetype  --preprocess-conf  --verbose 0 dump/train_us_orig/deltatrue/feats.scp data/train_us_orig/tmp-jAXNd/input/shape.scp
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/data2json.sh --feat dump/test_us_orig/deltatrue/feats.scp --bpecode data/lang_char/train_us_orig_unigram150.model data/test_us_orig data/lang_char/train_us_orig_unigram150_units.txt
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/feat_to_shape.sh --cmd run.pl --nj 1 --filetype  --preprocess-conf  --verbose 0 dump/test_us_orig/deltatrue/feats.scp data/test_us_orig/tmp-RTIj3/input/shape.scp
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 1974 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 2030 with 1
+sym2int.pl: replacing 1940 with 1
+sym2int.pl: replacing 41 with 1
+** Replaced 8 instances of OOVs with 1
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/data2json.sh --feat dump/test_non_us_orig/deltatrue/feats.scp --bpecode data/lang_char/train_us_orig_unigram150.model data/test_non_us_orig data/lang_char/train_us_orig_unigram150_units.txt
+/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/../../../utils/feat_to_shape.sh --cmd run.pl --nj 1 --filetype  --preprocess-conf  --verbose 0 dump/test_non_us_orig/deltatrue/feats.scp data/test_non_us_orig/tmp-zXlj6/input/shape.scp
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 2040 with 1
+sym2int.pl: replacing 2030 with 1
+sym2int.pl: replacing 1940 with 1
+sym2int.pl: replacing 18 with 1
+sym2int.pl: replacing 2031 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 1974 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 0554 with 1
+sym2int.pl: replacing 1974 with 1
+sym2int.pl: replacing 120 with 1
+sym2int.pl: replacing 2012 with 1
+sym2int.pl: replacing 67 with 1
+** Replaced 15 instances of OOVs with 1
+stage 4: Network Training
+exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample1_2_2_1_1_unit1024_proj1024/d2_unit1024/location_aconvc10_aconvf100/mtlalpha0.5/drop0.5/adadelta/sampprob0.0/bs32/mli600_mlo150_beamsize_20/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta
+run.pl: job failed, log is in exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample1_2_2_1_1_unit1024_proj1024/d2_unit1024/location_aconvc10_aconvf100/mtlalpha0.5/drop0.5/adadelta/sampprob0.0/bs32/mli600_mlo150_beamsize_20/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/train.log
+RAN_PATH
+RAN_CMD
+CUDA_VISIBLE_DEVICES 2
+dictionary: data/lang_char/train_us_orig_unigram150_units.txt
+stage 4: Network Training
+exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample1_2_2_1_1_unit1024_proj1024/d2_unit1024/location_aconvc10_aconvf100/mtlalpha0.5/drop0.5/adadelta/sampprob0.0/bs16/mli600_mlo150_beamsize_20/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta
