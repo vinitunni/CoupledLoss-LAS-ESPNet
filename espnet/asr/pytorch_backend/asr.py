@@ -41,7 +41,8 @@ from espnet.utils.cli_utils import FileWriterWrapper
 from espnet.utils.deterministic_utils import set_deterministic_pytorch
 from espnet.utils.dynamic_import import dynamic_import
 from espnet.utils.io_utils import LoadInputsAndTargets
-from espnet.utils.training.batchfy import make_batchset
+#from espnet.utils.training.batchfy import make_batchset
+from espnet.utils.training.batchfy_modified import make_batchset
 from espnet.utils.training.iterators import ShufflingEnabler
 from espnet.utils.training.iterators import ToggleableShufflingMultiprocessIterator
 from espnet.utils.training.iterators import ToggleableShufflingSerialIterator
