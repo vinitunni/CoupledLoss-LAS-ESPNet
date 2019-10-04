@@ -384,7 +384,7 @@ def torch_resume(snapshot_path, trainer):
     #snapshot_dict['optimizer']['param_groups'][0]['eps']=1e-6
 
     # retore optimizer states
-    #trainer.updater.get_optimizer('main').load_state_dict(snapshot_dict['optimizer'])
+    trainer.updater.get_optimizer('main').load_state_dict(snapshot_dict['optimizer'])
 
     # delete opened snapshot
     del snapshot_dict

@@ -394,7 +394,7 @@ def make_batchset(data, batch_size=0, max_length_in=float("inf"), max_length_out
                 temp_sorted.append(temp_q[i])
                 sorted_data = temp_sorted
 
-            logging.info('sorted_data '+ str(sorted_data))
+#            logging.info('sorted_data '+ str(sorted_data))
 
 ##End of modif for pairwise
 

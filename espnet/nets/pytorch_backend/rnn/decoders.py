@@ -111,7 +111,7 @@ class Decoder(torch.nn.Module):
                 z_list[l] = self.decoder[l](self.dropout_dec[l - 1](z_list[l - 1]), z_prev[l])
         return z_list, c_list
 
-    def forward(self, hs_pad, hlens, ys_pad, perm_index, strm_idx=0):
+    def forward(self, hs_pad, hlens, ys_pad, perm_index, strm_idx=0,epsilon=1e-10):
         """Decoder forward
 
         :param torch.Tensor hs_pad: batch of padded hidden state sequences (B, Tmax, D)
@@ -151,6 +151,7 @@ class Decoder(torch.nn.Module):
         # pys: utt x olen
         ys_in_pad = pad_list(ys_in, self.eos)
         ys_out_pad = pad_list(ys_out, self.ignore_id)
+        
 
         # get dim, length info
         batch = ys_out_pad.size(0)
@@ -198,9 +199,17 @@ class Decoder(torch.nn.Module):
         else:
             reduction_str = 'mean'
 
-
-
-
+        lens = [y.size(0) for y in ys_out]
+            
+        #Adding below line to remove oversampling due repeated files        
+        #TODO: mSet approriate value of epsilon
+        for i in range(int(len(hs_pad)/2)):
+            delta_norm =torch.norm(hs_pad[2*i,:,:]-hs_pad[2*i+1,:,:]) 
+           # logging.info("delta_norm is" + str(delta_norm))
+            if( delta_norm <= epsilon):
+                ys_out_pad[2*i,:]=self.ignore_id
+        
+        
         self.loss = F.cross_entropy(y_all, ys_out_pad.view(-1),
                                     ignore_index=self.ignore_id,
                                     reduction=reduction_str)
@@ -210,7 +219,6 @@ class Decoder(torch.nn.Module):
         #adding siamese loss below
         self.loss_siam = 0*self.loss
         att_cs = torch.stack(att_cs,0)
-        lens = [y.size(0) for y in ys_out]
         #logging.info('att_cs shape is: '+str(att_cs.shape))
         for i in range(int(att_cs.shape[1]/2)):
             max_len = max(lens[2*i],lens[2*i+1])
