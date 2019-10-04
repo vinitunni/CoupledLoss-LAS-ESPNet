@@ -352,8 +352,8 @@ if [ -z ${resume} ] ; then
 	expname=${expname}/fromscratch
 else
 	numsnp=$( echo ${resume} | grep -Eo '[0-9]+$')
-	echo ${resume} > ${expname}/resume.from
 	expname=${expname}/fromsnapshot${numsnp}
+	echo ${resume} > ${expname}/resume.from
 
 
 fi
@@ -362,6 +362,7 @@ expdir=exp_fresh/${expname}
 stop_stage=10
 if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
 	mkdir -p ${expdir}
+	cat ./run_esp.sh > ${expdir}/run.scrpt	#To write the entire script in the exprmnt file. Just to be sure
     echo "stage 4: Network Training"
 	echo ${expdir}
     ${cuda_cmd} --gpu ${ngpu} ${expdir}/train.log \
