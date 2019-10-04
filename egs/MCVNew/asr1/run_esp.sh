@@ -7,14 +7,17 @@
 echo RAN_PATH
 . ./cmd.sh
 echo RAN_CMD
-resume=
+resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample1_2_2_1_1_unit1024_proj1024/d2_unit1024/location_aconvc10_aconvf100/mtlalpha0.5/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_4/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/results/snapshot.ep.2
+#resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp_fresh/train_mixed_0.1_pytorch/vggblstm_e3/subsample1_2_2_1_1_unit1024_proj1024/d2_unit1024/location_aconvc10_aconvf100/mtlalpha0.5/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_4/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/results/snapshot.ep.2
+#resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp_fresh/train_mixed_0.25_pytorch/vggblstm_e3/subsample1_2_2_1_1_unit1024_proj1024/d2_unit1024/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_20/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/results/snapshot.ep.3
+#resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp_fresh/train_mixed_0.1_pytorch/vggblstm_e3/subsample1_2_2_1_1_unit1024_proj1024/d2_unit1024/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_20/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/results/snapshot.ep.3
 #resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.3/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/results/snapshot.ep.21
 #resume=/home/vinit/exp/espnet-0.4.0/egs/MCVNew/asr1/exp_fresh/train_us_orig_pytorch/vggblstm_e3/subsample2_2_2_unit512_proj512/d1_unit512/location_aconvc10_aconvf100/mtlalpha0.0/drop0.5/adadelta/sampprob0.0/bs16/mli600_mlo150_beamsize_10/pairwiseFalse_pairthrshld0_paircutoff0_pairlmbda0_pairalpha0_delta/results/snapshot.ep.14
 
 # general configuration
 backend=pytorch
 stage=4     # start from -1 if you need to start from data download
-stop_stage=10
+stop_stage=2
 ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu2
 debugmode=1
 dumpdir=dump   # directory to dump full features
@@ -42,7 +45,7 @@ aconv_chans=10
 aconv_filts=100
 
 # hybrid CTC/attention
-mtlalpha=0.0
+mtlalpha=0.5
 
 # minibatch related
 batchsize=16
@@ -55,7 +58,7 @@ drop=0.5 #dropout changed to 0.2 by vinit
 # optimization related
 sortagrad=0 # Feed samples from shortest to longest ; -1: enabled for all epochs, 0: disabled, other: enabled for 'other' epochs
 opt=adadelta
-epochs=30
+epochs=20
 patience=10
 
 # rnnlm related
@@ -73,7 +76,7 @@ lmtag=            # tag for managing LMs
 
 # decoding parameter
 lm_weight=0.3 #0.7
-beam_size=20
+beam_size=4
 penalty=0.0
 maxlenratio=0.0
 minlenratio=0.0
@@ -81,7 +84,7 @@ ctc_weight=0.0
 recog_model=model.acc.best # set a model to be used for decoding: 'model.acc.best' or 'model.loss.best'
 
 # scheduled sampling option
-samp_prob=0.0
+samp_prob=0.3
 #sampling_probability=0
 
 # Set this to somewhere where you want to put your data, or where
@@ -118,12 +121,11 @@ echo CUDA_VISIBLE_DEVICES $CUDA_VISIBLE_DEVICES
 
 ####If pairwise is true change values below. Else uncomment the pirwise False to eansure simpler folder creations
 
-#pairwise=True
-#pair_threshold=0.7
+#pairwise=True pair_threshold=0.7
 #pair_cutoff=10
 #pair_lambda=0.0005
 #pair_alpha=1.0
-
+#
 
 pairwise=False
 pair_threshold=0
@@ -134,18 +136,18 @@ pair_alpha=0
 
 
 # it is best to create a different dev set for each train set as bpe encoding is error free this way
-train_set=train_us_orig
-train_dev=test_us_orig
+#train_set=train_us_orig
+#train_dev=test_us_orig
 
 #train_set=train_paired_0.5
 #train_dev=test_non_us_mp3
 
-#train_set=train_mixed_0.5
-#train_dev=test_us_mixed_0.5
+train_set=train_mixed_0.25
+train_dev=test_us_mixed_0.25
 
-recog_set="test_non_us_orig"
-#recog_set="test_us_mixed_0.1"
-#recog_set="test_non_us_mixed_0.5"
+#recog_set="test_non_us_orig test_us_orig"
+#recog_set="test_us_mixed_0.25"
+recog_set="test_non_us_mixed_0.25 test_us_mixed_0.25"
 ###### Ignore stage -1 as we are not downloading the data
 ######
 if [ ${stage} -le -1 ] && [ ${stop_stage} -ge -1 ]; then
@@ -338,12 +340,24 @@ fi
 
 if [ -z ${tag} ]; then
     expname=${train_set}_${backend}/${etype}_e${elayers}/subsample${subsample}_unit${eunits}_proj${eprojs}/d${dlayers}_unit${dunits}/${atype}_aconvc${aconv_chans}_aconvf${aconv_filts}/mtlalpha${mtlalpha}/drop${drop}/${opt}/sampprob${samp_prob}/bs${batchsize}/mli${maxlen_in}_mlo${maxlen_out}_beamsize_${beam_size}/pairwise${pairwise}_pairthrshld${pair_threshold}_paircutoff${pair_cutoff}_pairlmbda${pair_lambda}_pairalpha${pair_alpha}
+
     if ${do_delta}; then
         expname=${expname}_delta
     fi
 else
     expname=${train_set}_${backend}_${tag}
 fi
+
+if [ -z ${resume} ] ; then
+	expname=${expname}/fromscratch
+else
+	numsnp=$( echo ${resume} | grep -Eo '[0-9]+$')
+	echo ${resume} > ${expname}/resume.from
+	expname=${expname}/fromsnapshot${numsnp}
+
+
+fi
+
 expdir=exp_fresh/${expname}
 stop_stage=10
 if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
@@ -399,13 +413,15 @@ fi
 
 if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
     echo "stage 5: Decoding"
-    nj=28
+    nj=14
 
     pids=() # initialize pids
     for rtask in ${recog_set}; do
     (
 		decode_dir=decode_${rtask}_beam${beam_size}_e${recog_model}_p${penalty}_len${minlenratio}-${maxlenratio}_ctcw${ctc_weight}_rnnlm${lm_weight}_${lmtag}
         feat_recog_dir=${dumpdir}/${rtask}/delta${do_delta}
+		echo ${expdir}
+		echo ${decode_dir}
 
         # split data
         splitjson.py --parts ${nj} ${feat_recog_dir}/data_${bpemode}${nbpe}.json

@@ -16,6 +16,8 @@ __pycache__/
 check_autopep8
 .coverage*
 coverage.xml*
+*.sw*
+*/.*
 
 # recipe related
 egs/*/*/data*
