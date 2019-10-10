@@ -1,5 +1,6 @@
 import itertools
 import logging
+import json
 
 import numpy as np
 
@@ -392,9 +393,11 @@ def make_batchset(data, batch_size=0, max_length_in=float("inf"), max_length_out
             for i in np.random.permutation(range(len(temp_p))):
                 temp_sorted.append(temp_p[i])
                 temp_sorted.append(temp_q[i])
-                sorted_data = temp_sorted
+            sorted_data = temp_sorted
+            with open("/tmp/0.25_paired_dump",'w') as writer:
+                json.dump(sorted_data,writer)
 
-#            logging.info('sorted_data '+ str(sorted_data))
+            #logging.info('sorted_data '+ str(sorted_data))
 
 ##End of modif for pairwise
 
@@ -433,6 +436,9 @@ def make_batchset(data, batch_size=0, max_length_in=float("inf"), max_length_out
         batches = list(itertools.chain(*batches_list))
 
     # for debugging
+    #num_batches=300
+    logging.info('num_batches is'+str(num_batches))
+    
     if num_batches > 0:
         batches = batches[:num_batches]
     logging.info('# minibatches: ' + str(len(batches)))

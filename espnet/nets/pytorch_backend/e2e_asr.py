@@ -141,6 +141,7 @@ class E2E(ASRInterface, torch.nn.Module):
         self.pairwise = args.pairwise
         self.pair_lambda = args.pair_lambda
         self.pair_alpha = args.pair_alpha
+        self.epsilon = args.oversamp_epsilon
 
     def init_like_chainer(self):
         """Initialize weight like chainer
@@ -207,6 +208,17 @@ class E2E(ASRInterface, torch.nn.Module):
             hs_pad, hlens = self.feature_transform(hs_pad, hlens)
         else:
             hs_pad, hlens = xs_pad, ilens
+        ignore_mask = np.zeros(len(hs_pad))
+        if self.pairwise:
+            r,c = hs_pad[0,:,:].shape
+            for i in range(int(len(hs_pad)/2)):
+                delta_norm =torch.norm(hs_pad[2*i,:,:]-hs_pad[2*i+1,:,:])/pow(r*c,0.5)
+                logging.info("delta_norm is" + str(delta_norm))
+                #logging.info("epsilon is" + str(self.epsilon))
+                if( delta_norm <= self.epsilon):
+                    ignore_mask[2*i]=1
+        ignore_mask = (ignore_mask==1)
+        #logging.info("ignore_mask is "+ str(ignore_mask))
 
         # 1. Encoder
         #logging.info("before sorting hlens is: "+ str(hlens))
@@ -227,9 +239,9 @@ class E2E(ASRInterface, torch.nn.Module):
 
         # 3. attention loss
         if self.mtlalpha == 1:
-            self.loss_att, acc = None, None
+            self.loss_att, self.loss_siam, acc = None, None, None
         else:
-            self.loss_att, self.loss_siam, acc = self.dec(hs_pad, hlens, ys_pad, perm_index)
+            self.loss_att, self.loss_siam, acc = self.dec(hs_pad, hlens, ys_pad, ignore_mask)
         self.acc = acc
 
         # 4. compute cer without beam search
@@ -282,7 +294,7 @@ class E2E(ASRInterface, torch.nn.Module):
                 seq_hat_text = seq_hat_text.replace(self.recog_args.blank, '')
                 seq_true_text = "".join(seq_true).replace(self.recog_args.space, ' ')
 
-				#print added by vinit to compare between teacher forced and non teacher forced outputs
+                #print added by vinit to compare between teacher forced and non teacher forced outputs
                 logging.info('Nbest output-->groundtruth is ' + seq_true_text)
                 logging.info('Nbest output-->prediction  is ' + seq_hat_text)
 

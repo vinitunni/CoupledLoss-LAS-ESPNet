@@ -111,7 +111,7 @@ class Decoder(torch.nn.Module):
                 z_list[l] = self.decoder[l](self.dropout_dec[l - 1](z_list[l - 1]), z_prev[l])
         return z_list, c_list
 
-    def forward(self, hs_pad, hlens, ys_pad, perm_index, strm_idx=0,epsilon=1e-10):
+    def forward(self, hs_pad, hlens, ys_pad, ignore_mask, strm_idx=0):
         """Decoder forward
 
         :param torch.Tensor hs_pad: batch of padded hidden state sequences (B, Tmax, D)
@@ -202,12 +202,12 @@ class Decoder(torch.nn.Module):
         lens = [y.size(0) for y in ys_out]
             
         #Adding below line to remove oversampling due repeated files        
-        #TODO: mSet approriate value of epsilon
-        for i in range(int(len(hs_pad)/2)):
-            delta_norm =torch.norm(hs_pad[2*i,:,:]-hs_pad[2*i+1,:,:]) 
-           # logging.info("delta_norm is" + str(delta_norm))
-            if( delta_norm <= epsilon):
-                ys_out_pad[2*i,:]=self.ignore_id
+        #logging.info("shape of ys_out_pad is" + str(ys_out_pad.shape)) 
+        #logging.info('ys_out_pad_before is ' + str(ys_out_pad))
+        for i in range(len(ignore_mask)):
+            if ignore_mask[i]:
+                ys_out_pad[i,:]=self.ignore_id
+        #logging.info('ys_out_pad_after is ' + str(ys_out_pad))
         
         
         self.loss = F.cross_entropy(y_all, ys_out_pad.view(-1),

@@ -288,6 +288,8 @@ def main(cmd_args):
                         help='Lambda weight for siamese loss')
     parser.add_argument('--pair-alpha', type=float, default=0.001,
                         help='alpha(lr) weight for siamese loss')
+    parser.add_argument('--oversamp-epsilon', type=float, default=1e-6,
+                        help='epsilon threshold to remove oversampling due to cross entropy during pairwise')
 
     args, _ = parser.parse_known_args(cmd_args)
 
