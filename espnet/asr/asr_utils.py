@@ -341,7 +341,7 @@ def torch_load(path, model):
     :param str path: model file or snapshot file to be loaded
     :param torch.nn.Module model: torch model
     """
-    if 'snapshot' in path:
+    if 'snapshot.' in path:
         model_state_dict = torch.load(path, map_location=lambda storage, loc: storage)['model']
     else:
         model_state_dict = torch.load(path, map_location=lambda storage, loc: storage)
