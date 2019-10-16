@@ -361,9 +361,12 @@ def torch_resume(snapshot_path, trainer):
     """
     # load snapshot
     snapshot_dict = torch.load(snapshot_path, map_location=lambda storage, loc: storage)
+    ###This part is to try to restore from model instead of snapshotsnapshot
+    #Use the below line only if resuming from a saved model
+    model_state_dict = torch.load(snapshot_path, map_location=lambda storage, loc: storage)
 
     # restore trainer states
-    d = NpzDeserializer(snapshot_dict['trainer'])
+    #d = NpzDeserializer(snapshot_dict['trainer'])
     #d.load(trainer)
 
     # restore model states
@@ -376,15 +379,19 @@ def torch_resume(snapshot_path, trainer):
     else:
         # (for ASR model)
         if hasattr(trainer.updater.model, "module"):
-            trainer.updater.model.module.load_state_dict(snapshot_dict['model'])
+            #trainer.updater.model.module.load_state_dict(snapshot_dict['model'])
+            #Use the below line only if resuming from a saved model
+            trainer.updater.model.module.load_state_dict(model_state_dict)
         else:
-            trainer.updater.model.load_state_dict(snapshot_dict['model'])
+            #trainer.updater.model.load_state_dict(snapshot_dict['model'])
+            #Use the below line only if resuming from a saved model
+            trainer.updater.model.load_state_dict(model_state_dict)
     #DIRTY hack to restire eps to higher value when restoring. Find the proper way
     #states = list(snapshot_dict['optimiser']['state'].keys())
     #snapshot_dict['optimizer']['param_groups'][0]['eps']=1e-6
 
     # retore optimizer states
-    trainer.updater.get_optimizer('main').load_state_dict(snapshot_dict['optimizer'])
+    #trainer.updater.get_optimizer('main').load_state_dict(snapshot_dict['optimizer'])
 
     # delete opened snapshot
     del snapshot_dict
